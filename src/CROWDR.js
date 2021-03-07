@@ -8,7 +8,13 @@ import TerrainController from './controllers/TerrainController';
 // Models
 
 // Views
+import View from './views/View';
 import MainView from './views/MainView';
+
+// Components
+import Component from './views/components/Component';
+import CardComponent from './views/components/CardComponent';
+import NavbarComponent from './views/components/NavbarComponent';
 
 export {
 	// Controllers
@@ -21,5 +27,11 @@ export {
 	// Models
 
 	// Views
+	View,
 	MainView,
+	
+	// Components
+	Component,
+	CardComponent,
+	NavbarComponent,
 }

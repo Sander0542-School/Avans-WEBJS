@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import '../resources/js/app';
 
 import {MainController} from './CROWDR';
 
