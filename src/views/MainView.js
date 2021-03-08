@@ -16,8 +16,8 @@ export default class MainView extends View {
 		
 		const grid = this.createElement('div', '', 'gridController');
 		const placeable = this.createElement('div', '', 'placeableController');
-		const settings = this.createElement('div', '', 'placeableController');
-		const terrain = this.createElement('div', '', 'placeableController');
+		const settings = this.createElement('div', '', 'settingsController');
+		const terrain = this.createElement('div', '', 'terrainController');
 		
 		const gridCard = new CardComponent('Grid form', grid).render();
 		const placeableCard = new CardComponent('Placeable Items', placeable).render();
