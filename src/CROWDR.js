@@ -6,9 +6,16 @@ import SettingsController from './controllers/SettingsController';
 import TerrainController from './controllers/TerrainController';
 
 // Models
+import Model from './models/Model';
+import GridModel from './models/GridModel';
+
+// Forms
+import Form from './models/forms/Form';
+import RegionForm from './models/forms/RegionForm';
 
 // Views
 import View from './views/View';
+import GridView from './views/GridView';
 import MainView from './views/MainView';
 
 // Components
@@ -24,10 +31,17 @@ export {
 	SettingsController,
 	TerrainController,
 
+	// Forms
+	Form,
+	RegionForm,
+
 	// Models
+	Model,
+	GridModel,
 
 	// Views
 	View,
+	GridView,
 	MainView,
 	
 	// Components
