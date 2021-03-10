@@ -10,6 +10,7 @@ import TerrainController from './controllers/TerrainController';
 // Views
 import View from './views/View';
 import MainView from './views/MainView';
+import TerrainView from './views/TerrainView';
 
 // Components
 import Component from './views/components/Component';
@@ -29,6 +30,7 @@ export {
 	// Views
 	View,
 	MainView,
+	TerrainView,
 	
 	// Components
 	Component,
