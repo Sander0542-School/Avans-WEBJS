@@ -49,7 +49,7 @@ export default class View {
 
 		for (const key in options) {
 			const value = options[key];
-			select.appendChild(this.createOption(value, key));
+			select.append(this.createOption(value, key));
 		}
 
 		if (selected) {
@@ -78,10 +78,10 @@ export default class View {
 			label.innerText = labelText;
 			label.htmlFor = inputElem.id;
 
-			group.appendChild(label);
+			group.append(label);
 		}
 
-		group.appendChild(inputElem);
+		group.append(inputElem);
 
 		if (errorText !== undefined) {
 			const isValid = errorText === null;
@@ -92,7 +92,7 @@ export default class View {
 				validation.innerText = errorText;
 				validation.classList.add('invalid-feedback');
 
-				group.appendChild(validation);
+				group.append(validation);
 			}
 		}
 
