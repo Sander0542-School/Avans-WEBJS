@@ -6,11 +6,14 @@ import SettingsController from './controllers/SettingsController';
 import TerrainController from './controllers/TerrainController';
 
 // Models
+import PlacebleModel from './models/PlaceableModel';
+import Model from './models/Model';
 
 // Views
 import View from './views/View';
 import MainView from './views/MainView';
 import TerrainView from './views/TerrainView';
+import PlaceableView from './views/PlaceableView'
 
 // Components
 import Component from './views/components/Component';
@@ -26,11 +29,14 @@ export {
 	TerrainController,
 
 	// Models
+	PlacebleModel,
+	Model,
 
 	// Views
 	View,
 	MainView,
 	TerrainView,
+	PlaceableView,
 	
 	// Components
 	Component,

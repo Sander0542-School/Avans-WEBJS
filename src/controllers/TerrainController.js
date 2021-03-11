@@ -1,4 +1,4 @@
-import {MainView, TerrainView} from "../CROWDR";
+import {TerrainView} from "../CROWDR";
 
 export default class TerrainController  {
 
