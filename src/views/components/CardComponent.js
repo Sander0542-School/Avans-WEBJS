@@ -15,8 +15,9 @@ export default class CardComponent extends Component {
 
 		title.innerText = this.title;
 
-		body.append(title, this.content);
-		card.append(body);
+		body.appendChild(title);
+		body.appendChild(this.content);
+		card.appendChild(body);
 
 		return card;
 	}

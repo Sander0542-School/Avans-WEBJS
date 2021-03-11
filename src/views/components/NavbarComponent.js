@@ -14,7 +14,7 @@ export default class NavbarComponent extends Component {
 		title.href = '#';
 		title.innerText = this.title;
 
-		navbar.append(title);
+		navbar.appendChild(title);
 
 		return navbar;
 	}

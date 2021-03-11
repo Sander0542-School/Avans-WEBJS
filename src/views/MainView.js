@@ -24,13 +24,14 @@ export default class MainView extends View {
 		const settingsCard = new CardComponent('Settings', settings).render();
 		const terrainCard = new CardComponent('Terrain', terrain).render();
 		
-		colLeft.append(gridCard, placeableCard);
-		colMiddle.append(terrainCard);
-		colRight.append(settingsCard);
+		colLeft.appendChild(gridCard);
+		colLeft.appendChild(placeableCard);
+		colMiddle.appendChild(terrainCard);
+		colRight.appendChild(settingsCard);
 
-		container.append(row);
-		row.append(colLeft, colMiddle, colRight);
+		container.appendChild(row);
+		row.appendChild(colLeft, colMiddle, colRight);
 		
-		this.app.append(navbar, container);
+		this.app.appendChild(navbar, container);
 	}
 }

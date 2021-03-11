@@ -8,7 +8,7 @@ export default class GridView extends View {
 
 		const form = this.createElement('div', '', 'gridForm');
 
-		this.app.append(form);
+		this.app.appendChild(form);
 	}
 
 	resetForm() {
@@ -105,7 +105,7 @@ export default class GridView extends View {
 			this.getElement(`#${id}`).focus();
 		}))
 
-		formElements.forEach(formElement => formElem.append(formElement));
+		formElements.forEach(formElement => formElem.appendChild(formElement));
 
 		if (regionForm.isValid()) {
 			const submitButton = this.createElement('button', 'btn btn-success', 'regionSubmit');
@@ -114,7 +114,7 @@ export default class GridView extends View {
 				this.submitForm();
 			});
 
-			formElem.append(submitButton);
+			formElem.appendChild(submitButton);
 		}
 
 		const resetButton = this.createElement('button', 'btn btn-danger float-right');
@@ -123,6 +123,6 @@ export default class GridView extends View {
 			this.resetForm();
 		});
 
-		formElem.append(resetButton);
+		formElem.appendChild(resetButton);
 	}
 }
