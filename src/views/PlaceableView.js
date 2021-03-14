@@ -41,7 +41,7 @@ export default class PlaceableView extends View {
 			itemObject.append(itemHeader);
 			
 			//add a click event listener that calls toggleDone()
-			itemObject.addEventListener("dragstart", () => item.toggleDone());
+			// itemObject.addEventListener("dragstart", () => item.toggleDone());
 		});
 		
 		

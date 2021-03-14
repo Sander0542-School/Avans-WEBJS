@@ -7,14 +7,14 @@ export default class TerrainView extends View {
 		
 		this.app = this.getElement('#terrainController');
 		
-		const container = this.createElement('div', '', 'drag-container');
+		const container = this.createElement('div', '', 'drag-container ');
 		container.style.setProperty('--grid-rows', 15);
 		container.style.setProperty('--grid-cols', 15);
 		
 		for (let c = 0; c < (15 * 15); c++) {
 			let cell = document.createElement("div");
 			
-			container.appendChild(cell).className = "grid-item";
+			container.appendChild(cell).className = "grid-item dropzones";
 		}
 		
 		
