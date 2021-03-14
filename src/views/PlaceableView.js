@@ -31,7 +31,7 @@ export default class PlaceableView extends View {
 		//for each Task in the list...
 		this._allItems.forEach(item => {
 			//create an <li> and append it to the <ul>
-			let itemObject = col.appendChild(this.createElement('div', 'card-header', 'item-header'));
+			let itemObject = col.appendChild(this.createElement('div', 'card-header draggable-item', 'item-header'));
 			//set the textContent to the task title
 			itemObject.textContent = item.title;
 			itemObject.setAttribute('draggable', true);
