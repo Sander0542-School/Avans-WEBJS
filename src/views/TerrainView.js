@@ -27,18 +27,7 @@ export default class TerrainView extends View {
 
 				for (let cellData = 1; cellData <= 15; cellData++) {
 					var cell = this.createElement('td', 'dropzones', `${rowData}, ${cellData} `);
-					// cell.addEventListener('dragenter', (e) => {
-					// 	if (e.target.classList.contains('dropzone')) {
-					// 		e.target.classList.add('solid-border');
-					// 	}
-					// });
-					// cell.addEventListener('drop', (e) => {
-					// 	e.preventDefault();
-					// 	e.target.appendChild(el);
-					// 	el = null;
-					// 	e.target.classList.remove('solid-border');
-					// });
-					cell.innerText = `${rowData} ${cellData} `;
+					cell.innerText = ` `;
 					row.appendChild(cell);
 				}
 

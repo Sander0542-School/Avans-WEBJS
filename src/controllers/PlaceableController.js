@@ -7,13 +7,14 @@ export default class PlaceableController {
 		let item = new PlacebleModel();
 		item.height = 15;
 		item.width = 15;
+		item.id = 0;
 
 		let item2 = new PlacebleModel();
 		item2.height = 15;
 		item2.width = 15;
+		item2.id = 1;
 
 		let items = [item, item2];
-		
 		this.placeableView = new PlaceableView(items);
 
 
@@ -25,16 +26,31 @@ export default class PlaceableController {
 
 	addEvents() {
 		const dropzones = document.querySelectorAll('.dropzones');
-
+		const items = document.querySelectorAll('.draggable-item');
 
 		let el = null;
 
-		document
-			.querySelector('.draggable-item')
-			.addEventListener('dragstart', e => {
+		
+		items.forEach(item =>{
+			item.addEventListener('dragstart', e => {
+				// debugger;
+				console.log(e);
 				el = e.target.cloneNode(true);
+				// console.log(el);
 				// el.removeAttribute('draggable');
 			});
+			}
+		);
+		
+		// document
+		// 	.querySelector('.draggable-item')
+		// 	.addEventListener('dragstart', e => {
+		// 		// debugger;
+		// 		console.log(e);
+		// 		el = e.target.cloneNode(true);
+		// 		// console.log(el);
+		// 		// el.removeAttribute('draggable');
+		// 	});
 
 
 		for (var i = 0; i < dropzones.length; i++) {
@@ -50,10 +66,11 @@ export default class PlaceableController {
 			});
 
 			dropzones[i].addEventListener('drop', (e) => {
-				// e.preventDefault();
+				// console.log(e);
+				e.preventDefault();
 				e.target.appendChild(el);
 				el = null;
-				e.target.classList.remove('solid-border');
+				// e.target.classList.remove('solid-border');
 			});
 
 			dropzones[i].addEventListener('dragleave', (e) => {

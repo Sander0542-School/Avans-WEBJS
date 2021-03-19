@@ -31,13 +31,13 @@ export default class PlaceableView extends View {
 		//for each Task in the list...
 		this._allItems.forEach(item => {
 			//create an <li> and append it to the <ul>
-			let itemObject = col.appendChild(this.createElement('div', 'card-header draggable-item', 'item-header'));
+			let itemObject = col.appendChild(this.createElement('div', 'card-header draggable-item', `item-header item-${item.id}`));
 			//set the textContent to the task title
 			itemObject.textContent = item.title;
 			itemObject.setAttribute('draggable', true);
 
-			const itemHeader = this.createElement('div', 'card-header', 'item-header');
-			itemHeader.innerText = item.width;
+			const itemHeader = this.createElement('div', 'card-header', "item-header");
+			itemHeader.innerText = item.id;
 			itemObject.append(itemHeader);
 			
 			//add a click event listener that calls toggleDone()
