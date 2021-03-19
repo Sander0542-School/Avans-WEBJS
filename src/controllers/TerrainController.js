@@ -1,13 +1,11 @@
-import {TerrainView} from "../CROWDR";
+import {TerrainView, BaseController} from "../CROWDR";
 
-export default class TerrainController  {
+export default class TerrainController extends BaseController  {
 
-	constructor() {
+	constructor(mainController) {
+		super(mainController);
 		this.terrainView = new TerrainView();
 		
-		
-
 	}
 
-	
 }

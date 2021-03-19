@@ -16,18 +16,6 @@ export default class PlaceableView extends View {
 		const col = this.createElement('div', 'col');
 
 		
-
-		// const dragItem = this.createElement('div', 'card bg-light my-3');
-		// dragItem.setAttribute('draggable', true);
-		//
-		// dragItem.addEventListener('dragstart', e => {
-		// 	el = e.target.cloneNode(true)
-		// });
-		
-		
-
-
-
 		//for each Task in the list...
 		this._allItems.forEach(item => {
 			//create an <li> and append it to the <ul>
@@ -43,7 +31,6 @@ export default class PlaceableView extends View {
 			//add a click event listener that calls toggleDone()
 			// itemObject.addEventListener("dragstart", () => item.toggleDone());
 		});
-		
 		
 		
 		// dragItem.append(itemHeader);

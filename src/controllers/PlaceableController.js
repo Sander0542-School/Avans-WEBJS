@@ -1,9 +1,9 @@
-import {TerrainView, PlaceableView, PlacebleModel} from "../CROWDR";
+import {TerrainView, PlaceableView, PlacebleModel, BaseController} from "../CROWDR";
 
-export default class PlaceableController {
+export default class PlaceableController extends BaseController {
 
-	constructor() {
-		
+	constructor(mainController) {
+		super(mainController);
 		let item = new PlacebleModel();
 		item.height = 15;
 		item.width = 15;
@@ -35,23 +35,13 @@ export default class PlaceableController {
 			item.addEventListener('dragstart', e => {
 				// debugger;
 				console.log(e);
-				el = e.target.cloneNode(true);
+				el = e.target;
 				// console.log(el);
 				// el.removeAttribute('draggable');
 			});
 			}
 		);
 		
-		// document
-		// 	.querySelector('.draggable-item')
-		// 	.addEventListener('dragstart', e => {
-		// 		// debugger;
-		// 		console.log(e);
-		// 		el = e.target.cloneNode(true);
-		// 		// console.log(el);
-		// 		// el.removeAttribute('draggable');
-		// 	});
-
 
 		for (var i = 0; i < dropzones.length; i++) {
 
@@ -74,10 +64,12 @@ export default class PlaceableController {
 			});
 
 			dropzones[i].addEventListener('dragleave', (e) => {
+				
 				if (e.target.classList.contains('dropzone')) {
 					e.target.classList.remove('solid-border');
 				}
 			});
 		}
 	}
+
 }

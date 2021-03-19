@@ -1,4 +1,6 @@
 // Controllers
+import Controller  from './controllers/Controller';
+import BaseController from './controllers/BaseController';
 import GridController from './controllers/GridController';
 import MainController from './controllers/MainController';
 import PlaceableController from './controllers/PlaceableController';
@@ -28,6 +30,8 @@ import NavbarComponent from './views/components/NavbarComponent';
 
 export {
 	// Controllers
+	Controller,
+	BaseController,
 	GridController,
 	MainController,
 	PlaceableController,
