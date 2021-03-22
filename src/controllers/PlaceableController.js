@@ -16,11 +16,8 @@ export default class PlaceableController extends BaseController {
 
 		let items = [item, item2];
 		this.placeableView = new PlaceableView(items);
-
-
+		
 		this.addEvents();
-
-
 	}
 
 
@@ -30,20 +27,12 @@ export default class PlaceableController extends BaseController {
 
 		let el = null;
 
-		
-		items.forEach(item =>{
+		items.forEach(item => {
 			item.addEventListener('dragstart', e => {
-				// debugger;
-				console.log(e);
 				el = e.target;
-				// console.log(el);
-				// el.removeAttribute('draggable');
 			});
-			}
-		);
-		
-
-		for (var i = 0; i < dropzones.length; i++) {
+		});
+		for (let i = 0; i < dropzones.length; i++) {
 
 			dropzones[i].addEventListener('dragover', (e) => {
 				e.preventDefault();
@@ -56,15 +45,12 @@ export default class PlaceableController extends BaseController {
 			});
 
 			dropzones[i].addEventListener('drop', (e) => {
-				// console.log(e);
 				e.preventDefault();
 				e.target.appendChild(el);
 				el = null;
-				// e.target.classList.remove('solid-border');
 			});
 
 			dropzones[i].addEventListener('dragleave', (e) => {
-				
 				if (e.target.classList.contains('dropzone')) {
 					e.target.classList.remove('solid-border');
 				}
