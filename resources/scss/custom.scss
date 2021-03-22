@@ -9,9 +9,26 @@
 	grid-template-columns: repeat(var(--grid-cols), 1fr);
 }
 
-.grid-item {
-	height: 47px;
-	width: 47px;
-	border: 1px solid #ddd;
-	text-align: center;
+//.grid-item {
+//	height: 46px;
+//	width: 46px;
+//	border: 1px solid #ddd;
+//	text-align: center;
+//	
+//}
+
+.draggable-item{
+	position: absolute;
+	background: green;
+	color: white;
+}
+
+.dropzones {
+	height: 46px;
+	width: 46px;
+}
+
+tr td{
+	padding: 0 !important;
+	margin: 0 !important;
 }

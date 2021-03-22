@@ -5,13 +5,13 @@ export default class PlaceableController extends BaseController {
 	constructor(mainController) {
 		super(mainController);
 		let item = new PlacebleModel();
-		item.height = 15;
-		item.width = 15;
+		item.height = 2;
+		item.width = 1;
 		item.id = 0;
 
 		let item2 = new PlacebleModel();
-		item2.height = 15;
-		item2.width = 15;
+		item2.height = 3;
+		item2.width = 3;
 		item2.id = 1;
 
 		let items = [item, item2];
