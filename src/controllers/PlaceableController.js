@@ -31,10 +31,9 @@ export default class PlaceableController extends BaseController {
 		items.forEach(item => {
 			item.addEventListener('dragstart', e => {
 				el = e.target;
-				
-				
 			});
 		});
+		
 		for (let i = 0; i < dropzones.length; i++) {
 
 			dropzones[i].addEventListener('dragover', (e) => {

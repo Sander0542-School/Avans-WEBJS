@@ -20,9 +20,9 @@ export default class MainView extends View {
 		const terrain = this.createElement('div', '', 'terrainController');
 		
 		const gridCard = new CardComponent('Grid form', grid).render();
-		const placeableCard = new CardComponent('Placeable Items', placeable).render();
 		const settingsCard = new CardComponent('Settings', settings).render();
 		const terrainCard = new CardComponent('Terrain', terrain).render();
+		const placeableCard = new CardComponent('Placeable Items', placeable).render();
 		
 		colLeft.append(gridCard, placeableCard);
 		colMiddle.append(terrainCard);
