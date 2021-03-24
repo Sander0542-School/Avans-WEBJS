@@ -17,56 +17,19 @@ export default class PlaceableController extends BaseController {
 		let items = [item, item2];
 		this.placeableView = new PlaceableView();
 		this.placeableView.loadItems(items);
-		
+
 		this.addEvents();
 	}
 
 
 	addEvents() {
-		const dropzones = document.querySelectorAll('.dropzones');
 		const items = document.querySelectorAll('.draggable-item');
-
-		let el = null;
 
 		items.forEach(item => {
 			item.addEventListener('dragstart', e => {
-				el = e.target;
+				e.dataTransfer.setData('text/plain', e.target.id);
 			});
 		});
-		
-		for (let i = 0; i < dropzones.length; i++) {
-
-			dropzones[i].addEventListener('dragover', (e) => {
-				e.preventDefault();
-			});
-
-			dropzones[i].addEventListener('dragenter', (e) => {
-				if (e.target.classList.contains('dropzone')) {
-					e.target.classList.add('solid-border');
-				}
-				
-			});
-
-			dropzones[i].addEventListener('drop', (e) => {
-				console.log(event.target.firstChild);
-				if (event.target.firstChild) {
-					e.preventDefault();
-					e.target.classList.remove('dropable');
-					e.target.appendChild(el);
-					e.stopPropagation();
-					
-					el = null;
-				}
-			});
-
-			dropzones[i].addEventListener('dragleave', (e) => {
-				
-				if (e.target.classList.contains('dropzones')) {
-
-					e.target.classList.remove('solid-border');
-				}
-			});
-		}
 	}
 
 }

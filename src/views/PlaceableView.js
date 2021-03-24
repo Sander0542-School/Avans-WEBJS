@@ -24,6 +24,8 @@ export default class PlaceableView extends View {
 			itemObject.style.width = `${46 * item.width}px`;
 			itemObject.innerText = item.id;
 			itemObject.setAttribute('draggable', true);
+			itemObject.dataset.width = item.width;
+			itemObject.dataset.height = item.height;
 
 			// itemCol.style.height = `${50 * item.height}px`;
 			// itemCol.style.width = `${46 * item.width}px`;
