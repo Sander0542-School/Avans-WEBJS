@@ -17,20 +17,16 @@ export default class PlaceableView extends View {
 		this.items.innerHTML = '';
 
 		items.forEach(item => {
-			// const itemCol = this.createElement('div', 'col-6');
+			const placeableElem = this.createElement('div', 'draggable-item', `draggable-item-${item.id}`);
+			placeableElem.style.height = `${46 * item.height}px`;
+			placeableElem.style.width = `${46 * item.width}px`;
+			placeableElem.innerText = item.type;
+			placeableElem.setAttribute('draggable', true);
+			placeableElem.dataset.type = item.type;
+			placeableElem.dataset.width = item.width;
+			placeableElem.dataset.height = item.height;
 
-			const itemObject = this.createElement('div', 'draggable-item', `draggable-item-${item.id}`);
-			itemObject.style.height = `${46 * item.height}px`;
-			itemObject.style.width = `${46 * item.width}px`;
-			itemObject.innerText = item.id;
-			itemObject.setAttribute('draggable', true);
-			itemObject.dataset.width = item.width;
-			itemObject.dataset.height = item.height;
-
-			// itemCol.style.height = `${50 * item.height}px`;
-			// itemCol.style.width = `${46 * item.width}px`;
-
-			this.items.append(itemObject);
+			this.items.append(placeableElem);
 		});
 	}
 }

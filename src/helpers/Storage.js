@@ -3,7 +3,7 @@ import {RegionForm} from "../CROWDR";
 export default class Storage {
 	static createRegion(regionForm = new RegionForm()) {
 		try {
-			let regions = JSON.parse(localStorage.getItem('regions') || "[]");
+			const regions = JSON.parse(localStorage.getItem('regions') || "[]");
 
 			const objects = [];
 
@@ -94,6 +94,16 @@ export default class Storage {
 			return true;
 		} catch (e) {
 			return false;
+		}
+	}
+	
+	static getRegion(regionName) {
+		const regions = JSON.parse(localStorage.getItem('regions') || "[]");
+
+		for (let region of regions) {
+			if (region.name === regionName) {
+				return region;
+			}
 		}
 	}
 }
