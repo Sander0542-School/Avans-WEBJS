@@ -12,9 +12,9 @@ export default class MainController extends Controller {
 		super();
 		this.mainView = new MainView();
 
-		this.gridController = new GridController();
-		this.placeableController = new PlaceableController();
-		this.settingsController = new SettingsController();
-		this.terrainController = new TerrainController();
+		this.gridController = new GridController(this);
+		this.placeableController = new PlaceableController(this);
+		this.settingsController = new SettingsController(this);
+		this.terrainController = new TerrainController(this);
 	}
 }
