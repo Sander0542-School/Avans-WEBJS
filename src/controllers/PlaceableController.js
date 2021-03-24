@@ -15,7 +15,8 @@ export default class PlaceableController extends BaseController {
 		item2.id = 1;
 
 		let items = [item, item2];
-		this.placeableView = new PlaceableView(items);
+		this.placeableView = new PlaceableView();
+		this.placeableView.loadItems(items);
 		
 		this.addEvents();
 	}
