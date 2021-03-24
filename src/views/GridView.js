@@ -1,4 +1,4 @@
-import {CardComponent, NavbarComponent, RegionForm, View} from "../CROWDR";
+import {CardComponent, ModalComponent, NavbarComponent, RegionForm, View} from "../CROWDR";
 
 export default class GridView extends View {
 	constructor() {
@@ -9,6 +9,10 @@ export default class GridView extends View {
 		const form = this.createElement('div', '', 'gridForm');
 
 		this.app.append(form);
+	}
+
+	setGridCreatedEvent(gridCreated) {
+		this.onGridCreated = gridCreated;
 	}
 
 	resetForm() {
@@ -38,6 +42,8 @@ export default class GridView extends View {
 		if (!regionForm.isValid()) {
 			return false;
 		}
+		
+		this.onGridCreated(regionForm);
 	}
 
 	formChanged() {
