@@ -15,7 +15,7 @@ export default class TerrainView extends View {
 			let row = this.createElement('tr');
 
 			for (let cellData = 1; cellData <= 15; cellData++) {
-				let cell = this.createElement('td', 'dropzones', `${rowData}, ${cellData} `);
+				let cell = this.createElement('td', 'dropzones dropable', `${rowData}-${cellData} `);
 				cell.innerText = ` `;
 				row.appendChild(cell);
 			}

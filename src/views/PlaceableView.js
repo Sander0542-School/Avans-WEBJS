@@ -15,11 +15,18 @@ export default class PlaceableView extends View {
 		const col = this.createElement('div', 'col');
 
 		this._allItems.forEach(item => {
+			const itemCol = this.createElement('div');
+			
 			let itemObject = col.appendChild(this.createElement('div', 'draggable-item', `item-header item-${item.id}`));
 			itemObject.style.height = `${46 * item.height}px`;
 			itemObject.style.width = `${46 * item.width}px`;
 			itemObject.innerText = item.id;
 			itemObject.setAttribute('draggable', true);
+
+			itemCol.style.height = `${50 * item.height}px`;
+			itemCol.style.width = `${46 * item.width}px`;
+			
+			col.append(itemCol);
 		});
 
 		row.append(col);
