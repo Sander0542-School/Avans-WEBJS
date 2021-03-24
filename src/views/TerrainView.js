@@ -7,7 +7,7 @@ export default class TerrainView extends View {
 
 		this.app = this.getElement('#terrainController');
 
-		let table = this.createElement('table', 'table table-bordered');
+		let table = this.createElement('table', 'table table-bordered terrain-table');
 		let tableBody = this.createElement('tbody');
 
 		for (let rowData = 1; rowData <= 15; rowData++) {
