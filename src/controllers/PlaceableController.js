@@ -48,8 +48,8 @@ export default class PlaceableController extends BaseController {
 			});
 
 			dropzones[i].addEventListener('drop', (e) => {
-				console.log(e.target.childElement);
-				if (!e.target.childElementCount <= 1) {
+				console.log(event.target.firstChild);
+				if (event.target.firstChild) {
 					e.preventDefault();
 					e.target.classList.remove('dropable');
 					e.target.appendChild(el);
