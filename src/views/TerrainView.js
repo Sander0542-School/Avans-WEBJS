@@ -22,7 +22,7 @@ export default class TerrainView extends View {
 			let tableRow = this.createElement('tr');
 
 			for (let cellId = 1; cellId <= 15; cellId++) {
-				const dropzone = this.createElement('td', 'dropzone dropable', `dropzone-${rowId}-${cellId} `);
+				const dropzone = this.createElement('td', 'dropzone dropable', `dropzone-${rowId}-${cellId}`);
 				dropzone.dataset.row = rowId;
 				dropzone.dataset.cell = cellId;
 
@@ -37,13 +37,16 @@ export default class TerrainView extends View {
 					const placeableItem = document.getElementById(e.dataTransfer.getData('text/plain'));
 
 					if (placeableItem) {
+						
 						if (parseInt(dropZone.dataset.row) + parseInt(placeableItem.dataset.height) > 16) {
 							return false;
 						}
 						if (parseInt(dropZone.dataset.cell) + parseInt(placeableItem.dataset.width) > 16) {
 							return false;
 						}
-						
+						if(!this.hasItem(dropZone.dataset.row, dropZone.dataset.cell, placeableItem )){
+							return false;
+						}
 						dropZone.classList.remove('dropable');
 						dropZone.appendChild(placeableItem);
 					}
@@ -58,5 +61,28 @@ export default class TerrainView extends View {
 
 			this.table.appendChild(tableRow);
 		}
+	}
+	
+	hasItem(rowNumber, cellNumber, item){
+		let rowID = 0;
+		let cellID = 0;
+		
+		for (rowID; rowID < item.dataset.height; rowID++) 
+		{
+			
+			for (cellID; cellID < item.dataset.width; cellID++) 
+			{
+				let id = `dropzone-${parseInt(rowNumber)+ parseInt(rowID)}-${parseInt(cellNumber)+parseInt(cellID)}`;
+				
+				let cell = document.getElementById(id);
+				if(cell.hasChildNodes())
+				{
+					return false;
+				}
+			}
+			cellID = 0;
+		}
+		
+		return true;
 	}
 }
