@@ -10,6 +10,7 @@ import TerrainController from './controllers/TerrainController';
 // Models
 import Model from './models/Model';
 import GridModel from './models/GridModel';
+import PlacebleModel from './models/PlaceableModel';
 
 // Forms
 import Form from './models/forms/Form';
@@ -19,6 +20,8 @@ import RegionForm from './models/forms/RegionForm';
 import View from './views/View';
 import GridView from './views/GridView';
 import MainView from './views/MainView';
+import TerrainView from './views/TerrainView';
+import PlaceableView from './views/PlaceableView'
 
 // Components
 import Component from './views/components/Component';
@@ -44,6 +47,7 @@ export {
 	RegionForm,
 
 	// Models
+	PlacebleModel,
 	Model,
 	GridModel,
 
@@ -51,6 +55,8 @@ export {
 	View,
 	GridView,
 	MainView,
+	TerrainView,
+	PlaceableView,
 	
 	// Components
 	Component,
