@@ -6,13 +6,14 @@ export default class PlaceableController extends BaseController {
 		super(mainController);
 		
 		this.placeableView = new PlaceableView();
-		this.loadPlaceables();
+		let regions = Storage.getRegions();
+		this.loadPlaceables(regions[0].name);
 
 		this.addEvents();
 	}
 	
-	loadPlaceables() {
-		const region = Storage.getRegion("Test");
+	loadPlaceables(regionName) {
+		const region = Storage.getRegion(regionName);
 
 		this.placeableView.loadItems(region.objects)
 	}

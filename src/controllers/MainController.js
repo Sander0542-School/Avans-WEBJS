@@ -17,4 +17,8 @@ export default class MainController extends Controller {
 		this.terrainController = new TerrainController(this);
 		this.placeableController = new PlaceableController(this);
 	}
+
+	regionChanged(region){
+		console.log(region);
+	}
 }
