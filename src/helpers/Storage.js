@@ -89,18 +89,22 @@ export default class Storage {
 
 			regions.push(region);
 
-			localStorage.setItem('regions', JSON.stringify(regions));
-			
+			this.saveRegions(regions);
+
 			return true;
 		} catch (e) {
 			return false;
 		}
 	}
-	
+
+	static saveRegions(regions) {
+		localStorage.setItem('regions', JSON.stringify(regions));
+	}
+
 	static getRegions() {
 		return JSON.parse(localStorage.getItem('regions') || "[]");
 	}
-	
+
 	static getRegion(regionName) {
 		const regions = this.getRegions();
 
@@ -109,5 +113,49 @@ export default class Storage {
 				return region;
 			}
 		}
+	}
+
+	static placePlaceable(region, placeable) {
+		if (!region || !placeable) {
+			return false;
+		}
+		
+		const regions = this.getRegions();
+
+		let regionId = null;
+
+		for (let i = 0; i < regions.length; i++) {
+			if (regions[i].name === region.name) {
+				regionId = i;
+				break;
+			}
+		}
+
+		if (regionId === null) {
+			return false;
+		}
+
+		// Remove placeable from objects if possible
+		for (let i = 0; i < regions[regionId].objects.length; i++) {
+			if (regions[regionId].objects[i].id === placeable.id) {
+				regions[regionId].objects.splice(i, 1);
+				break;
+			}
+		}
+
+		// Remove placeable from terrain if possible
+		for (let i = 0; i < regions[regionId].terrain.length; i++) {
+			if (regions[regionId].terrain[i].id === placeable.id) {
+				regions[regionId].terrain.splice(i, 1);
+				break;
+			}
+		}
+
+		// Add placeable to terrain
+		regions[regionId].terrain.push(placeable);
+		
+		this.saveRegions(regions);
+		
+		return true;
 	}
 }

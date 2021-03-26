@@ -1,4 +1,4 @@
-import {View} from "../CROWDR";
+import {PlaceableComponent, Storage, View} from "../CROWDR";
 
 export default class TerrainView extends View {
 
@@ -9,10 +9,14 @@ export default class TerrainView extends View {
 
 		this.table = this.createElement('table', 'table table-bordered terrain-table');
 
-		this.renderTable();
-
 		this.app.append(this.table);
 	};
+	
+	loadRegion(region) {
+		this.region = region;
+		
+		this.renderTable();
+	}
 
 	renderTable() {
 		this.table.innerHTML = '';
@@ -26,6 +30,14 @@ export default class TerrainView extends View {
 				dropzone.dataset.row = rowId;
 				dropzone.dataset.cell = cellId;
 
+				for (let terrain of this.region.terrain) {
+					if (terrain.row === rowId && terrain.cell === cellId) {
+						dropzone.classList.remove('dropable');
+						dropzone.append(new PlaceableComponent(terrain).render());
+						break;
+					}
+				}
+
 				dropzone.addEventListener('dragover', (e) => {
 					if (e.target.classList.contains('dropable')) {
 						e.preventDefault();
@@ -37,18 +49,30 @@ export default class TerrainView extends View {
 					const placeableItem = document.getElementById(e.dataTransfer.getData('text/plain'));
 
 					if (placeableItem) {
-						
 						if (parseInt(dropZone.dataset.row) + parseInt(placeableItem.dataset.height) > 16) {
 							return false;
 						}
 						if (parseInt(dropZone.dataset.cell) + parseInt(placeableItem.dataset.width) > 16) {
 							return false;
 						}
-						if(!this.hasItem(dropZone.dataset.row, dropZone.dataset.cell, placeableItem )){
+						if (!this.hasItem(dropZone.dataset.row, dropZone.dataset.cell, placeableItem)) {
 							return false;
 						}
 						dropZone.classList.remove('dropable');
 						dropZone.appendChild(placeableItem);
+
+						const success = Storage.placePlaceable(this.region, {
+							id: parseInt(placeableItem.dataset.id),
+							type: placeableItem.dataset.type,
+							row: parseInt(dropZone.dataset.row),
+							cell: parseInt(dropZone.dataset.cell),
+							height: parseInt(placeableItem.dataset.height),
+							width: parseInt(placeableItem.dataset.width),
+						});
+						
+						this.region = Storage.getRegion(this.region.name);
+						
+						console.log(success);
 					}
 				});
 
@@ -62,27 +86,19 @@ export default class TerrainView extends View {
 			this.table.appendChild(tableRow);
 		}
 	}
-	
-	hasItem(rowNumber, cellNumber, item){
-		let rowID = 0;
-		let cellID = 0;
-		
-		for (rowID; rowID < item.dataset.height; rowID++) 
-		{
-			
-			for (cellID; cellID < item.dataset.width; cellID++) 
-			{
-				let id = `dropzone-${parseInt(rowNumber)+ parseInt(rowID)}-${parseInt(cellNumber)+parseInt(cellID)}`;
-				
+
+	hasItem(rowNumber, cellNumber, item) {
+		for (let rowID = 0; rowID < item.dataset.height; rowID++) {
+			for (let cellID = 0; cellID < item.dataset.width; cellID++) {
+				let id = `dropzone-${parseInt(rowNumber) + parseInt(rowID)}-${parseInt(cellNumber) + parseInt(cellID)}`;
+
 				let cell = document.getElementById(id);
-				if(cell.hasChildNodes())
-				{
+				if (cell.hasChildNodes()) {
 					return false;
 				}
 			}
-			cellID = 0;
 		}
-		
+
 		return true;
 	}
 }
