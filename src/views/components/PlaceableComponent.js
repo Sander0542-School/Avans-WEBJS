@@ -26,7 +26,7 @@ export default class PlaceableComponent extends Component {
 		canvas.style.height = '100%';
 
 		const canvasImage = new Image(this.cellSize, this.cellSize);
-		canvasImage.src = "https://www.w3schools.com/html/img_the_scream.jpg";
+		canvasImage.src = `/image/tiles/${this.item.type}.png`;
 
 		const canvasContext = canvas.getContext("2d");
 		canvasContext.drawImage(canvasImage, 0, 0, canvasImage.width, canvasImage.height, 0, 0, canvas.width, canvas.height);
