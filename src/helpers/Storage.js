@@ -1,5 +1,5 @@
 export default class Storage {
-	static createRegion = (regionForm) => {
+	static createRegion(regionForm) {
 		try {
 			const regions = this.getRegions();
 
@@ -95,13 +95,21 @@ export default class Storage {
 		}
 	};
 
-	static saveRegions = (regions) => {
-		localStorage.setItem('regions', JSON.stringify(regions));
+	static saveRegions(regions) {
+		try {
+			localStorage.setItem('regions', JSON.stringify(regions));
+
+			return true;
+		} catch (e) {
+			return false;
+		}
 	};
 
-	static getRegions = () => JSON.parse(localStorage.getItem('regions') || "[]");
+	static getRegions() {
+		return JSON.parse(localStorage.getItem('regions') || "[]")
+	};
 
-	static getRegion = (regionName) => {
+	static getRegion(regionName) {
 		const regions = this.getRegions();
 
 		for (let region of regions) {
@@ -113,7 +121,7 @@ export default class Storage {
 		return null;
 	};
 
-	static placePlaceable = (region, placeable) => {
+	static placePlaceable(region, placeable) {
 		if (!region || !placeable) {
 			return false;
 		}

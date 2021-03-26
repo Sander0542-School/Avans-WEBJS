@@ -1,15 +1,19 @@
 export default class View {
-	getElement = (selector) => document.querySelector(selector);
+	getElement(selector) {
+		return document.querySelector(selector)
+	};
 
-	getElements = (selector) => document.querySelectorAll(selector);
+	getElements(selector) {
+		return document.querySelectorAll(selector)
+	};
 
-	getInputValue = (selector, defaultValue) => {
+	getInputValue(selector, defaultValue) {
 		const input = this.getElement(selector);
 
 		if (input) {
 			return input.value
 		}
-		
+
 		if (defaultValue) {
 			return defaultValue;
 		}
@@ -17,7 +21,7 @@ export default class View {
 		return null;
 	};
 
-	createElement = (tag, classes, id) => {
+	createElement(tag, classes, id) {
 		const element = document.createElement(tag);
 
 		if (classes) classes.split(' ').forEach(className => element.classList.add(className));
@@ -26,7 +30,7 @@ export default class View {
 		return element;
 	};
 
-	createInput = (type, name, id, value, onchange) => {
+	createInput(type, name, id, value, onchange) {
 		const input = this.createElement('input', 'form-control', id);
 		input.type = type;
 		input.name = name;
@@ -39,7 +43,7 @@ export default class View {
 		return input;
 	};
 
-	createSelect = (name, id, options, selected) => {
+	createSelect(name, id, options, selected) {
 		const select = this.createElement('select', 'form-control', id);
 		select.name = name;
 
@@ -55,7 +59,7 @@ export default class View {
 		return select;
 	};
 
-	createOption = (title, value) => {
+	createOption(title, value) {
 		const option = this.createElement('option');
 		option.innerText = title;
 
@@ -66,7 +70,7 @@ export default class View {
 		return option;
 	};
 
-	createFormGroup = (inputElem, labelText, errorText) => {
+	createFormGroup(inputElem, labelText, errorText) {
 		const group = this.createElement('div', 'form-group');
 
 		if (labelText) {

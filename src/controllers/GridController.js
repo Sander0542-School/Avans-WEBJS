@@ -5,11 +5,11 @@ export default class GridController extends BaseController {
 		super(mainController);
 		this.gridView = new GridView();
 
-		this.gridView.setGridCreatedEvent(this.regionCreated);
+		this.gridView.setGridCreatedEvent(regionForm => this.regionCreated(regionForm));
 		this.gridView.formChanged();
 	}
 	
-	regionCreated = (regionForm) => {
+	regionCreated(regionForm) {
 		if (Storage.createRegion(regionForm)) {
 			this.gridView.resetForm();
 			new ModalComponent('Region created', 'The region was successfully created.', 'modal-sm').show();

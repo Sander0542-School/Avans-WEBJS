@@ -21,14 +21,14 @@ export default class MainController extends Controller {
 		this.loadDefaultRegion();
 	}
 
-	loadDefaultRegion = () => {
+	loadDefaultRegion() {
 		const region = Storage.getRegions()[0];
 		if (region != null) {
 			this.regionChanged(region);
 		}
 	}
 
-	regionChanged = (region) => {
+	regionChanged(region) {
 		this.terrainController.loadRegion(region);
 		this.placeableController.loadRegion(region);
 	}

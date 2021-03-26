@@ -16,7 +16,7 @@ export default class ModalComponent extends Component {
 		this.size = size;
 	}
 
-	show = () => {
+	show() {
 		const modalId = 'modal' + Math.floor(Math.random() * 4000);
 		
 		const modal = this.createElement('div', 'modal fade show', modalId);

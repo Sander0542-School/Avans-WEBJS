@@ -9,46 +9,46 @@ export default class TerrainView extends View {
 		this.table = this.createElement('table', 'table table-bordered terrain-table');
 		this.nav = this.createElement('ul', 'nav nav-tabs');
 
-		this.renderNav();
-
 		this.app.append(this.nav);
 		this.app.append(this.table);
 	};
 
-	setRegionSelectedEvent = (regionChanged) => {
+	setRegionSelectedEvent(regionChanged) {
 		this.onRegionSelected = regionChanged;
 	};
 
-	loadRegion = (region) => {
+	loadRegion(region) {
 		this.region = region;
 
-		this.renderTable();
-		this.renderNav();
+		this.renderTable(region);
+		this.renderNav(region);
 	};
 
-	renderNav = () => {
+	renderNav(selectedRegion) {
 		this.nav.innerHTML = '';
 		
 		Storage.getRegions().forEach(region => {
 			const listItem = this.createElement('li', 'nav-item');
 			const listItemLink = this.createElement('a', 'nav-link');
-			
+
+			listItemLink.innerText = region.name;
 			listItemLink.dataset.region = region.name;
+
+			if (selectedRegion.name === region.name) {
+				listItemLink.classList.add('active');
+			}
 
 			listItemLink.addEventListener('click', e => {
 				const regionName = e.target.dataset.region;
 				this.onRegionSelected(Storage.getRegion(regionName));
 			});
-
-			listItemLink.innerText = region.name;
-
-			listItem.append(listItemLink);
 			
+			listItem.append(listItemLink);
 			this.nav.append(listItem);
 		});
 	};
 
-	renderTable = () => {
+	renderTable() {
 		this.table.innerHTML = '';
 
 		for (let rowId = 1; rowId <= 15; rowId++) {
@@ -117,7 +117,7 @@ export default class TerrainView extends View {
 		}
 	};
 
-	hasItem = (rowNumber, cellNumber, item) => {
+	hasItem(rowNumber, cellNumber, item) {
 		for (let rowID = 0; rowID < item.dataset.height; rowID++) {
 
 			for (let cellID = 0; cellID < item.dataset.width; cellID++) {

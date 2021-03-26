@@ -8,7 +8,7 @@ export default class CardComponent extends Component {
 		this.content = content;
 	}
 	
-	render = () => {
+	render() {
 		const card = this.createElement('div', 'card my-4');
 		const body = this.createElement('div', 'card-body');
 		const title = this.createElement('h5', 'card-title');

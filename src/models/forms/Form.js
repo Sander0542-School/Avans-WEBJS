@@ -2,7 +2,7 @@ import {Model} from "../../CROWDR";
 
 export default class Form extends Model {
 
-	isValid = (property, isFilled = false) => {
+	isValid(property, isFilled = false) {
 		if (property) {
 			const valid = !(property in this.validate());
 			
@@ -35,5 +35,7 @@ export default class Form extends Model {
 		return errors[property];
 	};
 
-	validate = () => ({});
+	validate() {
+		return {};
+	}
 }

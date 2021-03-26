@@ -5,10 +5,10 @@ export default class TerrainController extends BaseController {
 	constructor(mainController) {
 		super(mainController);
 		this.terrainView = new TerrainView();
-		this.terrainView.setRegionSelectedEvent(this.mainController.regionChanged);
+		this.terrainView.setRegionSelectedEvent(region => this.mainController.regionChanged(region));
 	}
 	
-	loadRegion = (region) => {
+	loadRegion(region) {
 		this.terrainView.loadRegion(region);
 	};
 }

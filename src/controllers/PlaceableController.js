@@ -8,7 +8,7 @@ export default class PlaceableController extends BaseController {
 		this.placeableView = new PlaceableView();
 	}
 	
-	loadRegion = (region) => {
+	loadRegion(region) {
 		this.placeableView.loadItems(region.objects)
 	};
 

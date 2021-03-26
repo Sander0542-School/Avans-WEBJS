@@ -17,9 +17,11 @@ export default class RegionForm extends Form {
 
 	trashBinCount = 1;
 
-	getRegionSize = () => 15 * 15;
-	
-	getFilledFieldCount = () => {
+	getRegionSize() {
+		return 15 * 15
+	};
+
+	getFilledFieldCount() {
 		let fieldsFilled = 0;
 
 		if (this.tentCount) {
@@ -57,13 +59,19 @@ export default class RegionForm extends Form {
 		return fieldsFilled;
 	};
 
-	getPercentageFilled = () => 100 / this.getRegionSize() * this.getFilledFieldCount();
+	getPercentageFilled() {
+		return 100 / this.getRegionSize() * this.getFilledFieldCount()
+	};
 
-	getPercentageLeft = () => 100 - this.getPercentageFilled();
-	
-	getMaximumTrashBins = () => Math.round(this.getPercentageLeft() / 20);
+	getPercentageLeft() {
+		return 100 - this.getPercentageFilled()
+	};
 
-	validate = () => {
+	getMaximumTrashBins() {
+		return Math.round(this.getPercentageLeft() / 20)
+	};
+
+	validate() {
 		let invalidFields = {};
 
 		if (!this.name) {
