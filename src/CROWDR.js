@@ -28,6 +28,7 @@ import Component from './views/components/Component';
 import CardComponent from './views/components/CardComponent';
 import ModalComponent from './views/components/ModalComponent';
 import NavbarComponent from './views/components/NavbarComponent';
+import PlaceableComponent from './views/components/PlaceableComponent';
 
 // Helpers
 import Storage from "./helpers/Storage";
@@ -63,6 +64,7 @@ export {
 	CardComponent,
 	ModalComponent,
 	NavbarComponent,
+	PlaceableComponent,
 	
 	// Helpers
 	Storage

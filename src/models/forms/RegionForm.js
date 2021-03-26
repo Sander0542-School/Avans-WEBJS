@@ -1,4 +1,4 @@
-import {Form} from "../../CROWDR";
+import {Form, Storage} from "../../CROWDR";
 
 export default class RegionForm extends Form {
 	name = '';
@@ -76,6 +76,10 @@ export default class RegionForm extends Form {
 
 		if (!this.name) {
 			invalidFields['name'] = 'The name is required';
+		} else {
+			if (Storage.getRegion(this.name) != null) {
+				invalidFields['name'] = 'A region with that name already exists';
+			}
 		}
 
 		if (!this.tentCount) {

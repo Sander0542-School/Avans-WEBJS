@@ -1,4 +1,4 @@
-import {View, Storage, PlaceableController, TerrainController} from "../CROWDR";
+import {PlaceableComponent, Storage, View} from "../CROWDR";
 
 export default class TerrainView extends View {
 
@@ -17,6 +17,12 @@ export default class TerrainView extends View {
 		this.app.append(this.nav);
 		this.app.append(this.table);
 	};
+	
+	loadRegion(region) {
+		this.region = region;
+		
+		this.renderTable();
+	}
 
 	renderNav() {
 		let regions = Storage.getRegions();
@@ -58,6 +64,14 @@ export default class TerrainView extends View {
 				dropzone.dataset.row = rowId;
 				dropzone.dataset.cell = cellId;
 
+				for (let terrain of this.region.terrain) {
+					if (terrain.row === rowId && terrain.cell === cellId) {
+						dropzone.classList.remove('dropable');
+						dropzone.append(new PlaceableComponent(terrain).render());
+						break;
+					}
+				}
+
 				dropzone.addEventListener('dragover', (e) => {
 					if (e.target.classList.contains('dropable')) {
 						e.preventDefault();
@@ -81,6 +95,19 @@ export default class TerrainView extends View {
 						}
 						dropZone.classList.remove('dropable');
 						dropZone.appendChild(placeableItem);
+
+						const success = Storage.placePlaceable(this.region, {
+							id: parseInt(placeableItem.dataset.id),
+							type: placeableItem.dataset.type,
+							row: parseInt(dropZone.dataset.row),
+							cell: parseInt(dropZone.dataset.cell),
+							height: parseInt(placeableItem.dataset.height),
+							width: parseInt(placeableItem.dataset.width),
+						});
+						
+						this.region = Storage.getRegion(this.region.name);
+						
+						console.log(success);
 					}
 				});
 
@@ -96,20 +123,15 @@ export default class TerrainView extends View {
 	}
 
 	hasItem(rowNumber, cellNumber, item) {
-		let rowID = 0;
-		let cellID = 0;
+		for (let rowID = 0; rowID < item.dataset.height; rowID++) {
 
-		for (rowID; rowID < item.dataset.height; rowID++) {
-
-			for (cellID; cellID < item.dataset.width; cellID++) {
+			for (let cellID = 0; cellID < item.dataset.width; cellID++) {
 				let id = `dropzone-${parseInt(rowNumber) + parseInt(rowID)}-${parseInt(cellNumber) + parseInt(cellID)}`;
-
 				let cell = document.getElementById(id);
 				if (cell.hasChildNodes()) {
 					return false;
 				}
 			}
-			cellID = 0;
 		}
 
 		return true;
