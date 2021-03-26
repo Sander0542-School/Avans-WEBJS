@@ -18,6 +18,6 @@ export default class PlaceableComponent extends Component {
 		element.dataset.width = this.item.width;
 		element.dataset.height = this.item.height;
 		
-		return element
+		return element;
 	}
 }

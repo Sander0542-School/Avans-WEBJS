@@ -1,8 +1,6 @@
 import {PlaceableComponent, Storage, View} from "../CROWDR";
 
 export default class TerrainView extends View {
-
-
 	constructor() {
 		super();
 
@@ -12,19 +10,22 @@ export default class TerrainView extends View {
 		this.nav = this.createElement('ul', 'nav nav-tabs');
 
 		this.renderNav();
-		this.renderTable();
 
 		this.app.append(this.nav);
 		this.app.append(this.table);
 	};
-	
-	loadRegion(region) {
-		this.region = region;
-		
-		this.renderTable();
-	}
 
-	renderNav() {
+	setRegionSelectedEvent = (regionChanged) => {
+		this.onRegionSelected = regionChanged;
+	};
+
+	loadRegion = (region) => {
+		this.region = region;
+
+		this.renderTable();
+	};
+
+	renderNav = () => {
 		let regions = Storage.getRegions();
 
 		regions.forEach(region => {
@@ -34,9 +35,8 @@ export default class TerrainView extends View {
 			listItemLink.dataset.region = region.name;
 
 			listItemLink.addEventListener('click', e => {
-
-				this.onRegionSelect(e.target.dataset.region);
-
+				const regionName = e.target.dataset.region;
+				this.onRegionSelected(Storage.getRegion(regionName));
 			});
 
 			listItemLink.innerText = region.name;
@@ -45,14 +45,9 @@ export default class TerrainView extends View {
 			this.nav.append(this.listItem);
 
 		});
-	}
+	};
 
-
-	selectRegion(regionName) {
-		this.onRegionSelect = regionName;
-	}
-
-	renderTable() {
+	renderTable = () => {
 		this.table.innerHTML = '';
 
 		for (let rowId = 1; rowId <= 15; rowId++) {
@@ -104,9 +99,9 @@ export default class TerrainView extends View {
 							height: parseInt(placeableItem.dataset.height),
 							width: parseInt(placeableItem.dataset.width),
 						});
-						
+
 						this.region = Storage.getRegion(this.region.name);
-						
+
 						console.log(success);
 					}
 				});
@@ -120,9 +115,9 @@ export default class TerrainView extends View {
 
 			this.table.appendChild(tableRow);
 		}
-	}
+	};
 
-	hasItem(rowNumber, cellNumber, item) {
+	hasItem = (rowNumber, cellNumber, item) => {
 		for (let rowID = 0; rowID < item.dataset.height; rowID++) {
 
 			for (let cellID = 0; cellID < item.dataset.width; cellID++) {
@@ -135,5 +130,5 @@ export default class TerrainView extends View {
 		}
 
 		return true;
-	}
+	};
 }

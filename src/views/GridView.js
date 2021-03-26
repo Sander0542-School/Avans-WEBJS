@@ -1,4 +1,4 @@
-import {CardComponent, ModalComponent, NavbarComponent, RegionForm, View} from "../CROWDR";
+import {RegionForm, View} from "../CROWDR";
 
 export default class GridView extends View {
 	constructor() {
@@ -21,7 +21,7 @@ export default class GridView extends View {
 
 		this.formChanged();
 	}
-	
+
 	getRegionForm() {
 		const regionForm = new RegionForm();
 		regionForm.name = this.getInputValue('#regionName');
@@ -32,17 +32,17 @@ export default class GridView extends View {
 		regionForm.treeType = this.getInputValue('#regionTreeType', 'high');
 		regionForm.toiletCount = this.getInputValue('#regionToilet');
 		regionForm.trashBinCount = this.getInputValue('#regionTrashBin');
-		
+
 		return regionForm;
 	}
-	
+
 	submitForm() {
 		const regionForm = this.getRegionForm();
-		
+
 		if (!regionForm.isValid()) {
 			return false;
 		}
-		
+
 		this.onGridCreated(regionForm);
 	}
 

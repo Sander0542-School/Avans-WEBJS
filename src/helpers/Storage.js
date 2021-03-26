@@ -1,7 +1,5 @@
-import {RegionForm} from "../CROWDR";
-
 export default class Storage {
-	static createRegion(regionForm = new RegionForm()) {
+	static createRegion = (regionForm) => {
 		try {
 			const regions = this.getRegions();
 
@@ -95,17 +93,15 @@ export default class Storage {
 		} catch (e) {
 			return false;
 		}
-	}
+	};
 
-	static saveRegions(regions) {
+	static saveRegions = (regions) => {
 		localStorage.setItem('regions', JSON.stringify(regions));
-	}
+	};
 
-	static getRegions() {
-		return JSON.parse(localStorage.getItem('regions') || "[]");
-	}
+	static getRegions = () => JSON.parse(localStorage.getItem('regions') || "[]");
 
-	static getRegion(regionName) {
+	static getRegion = (regionName) => {
 		const regions = this.getRegions();
 
 		for (let region of regions) {
@@ -113,15 +109,15 @@ export default class Storage {
 				return region;
 			}
 		}
-		
-		return null;
-	}
 
-	static placePlaceable(region, placeable) {
+		return null;
+	};
+
+	static placePlaceable = (region, placeable) => {
 		if (!region || !placeable) {
 			return false;
 		}
-		
+
 		const regions = this.getRegions();
 
 		let regionId = null;
@@ -155,9 +151,9 @@ export default class Storage {
 
 		// Add placeable to terrain
 		regions[regionId].terrain.push(placeable);
-		
+
 		this.saveRegions(regions);
-		
+
 		return true;
-	}
+	};
 }

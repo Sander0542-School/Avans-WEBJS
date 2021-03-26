@@ -7,7 +7,7 @@ export default class NavbarComponent extends Component {
 		this.title = title;
 	}
 
-	render() {
+	render = () => {
 		const navbar = this.createElement('nav', 'navbar navbar-light bg-light')
 		const title = this.createElement('a', 'navbar-brand');
 
@@ -17,5 +17,5 @@ export default class NavbarComponent extends Component {
 		navbar.append(title);
 
 		return navbar;
-	}
+	};
 }

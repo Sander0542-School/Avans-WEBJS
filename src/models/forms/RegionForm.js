@@ -1,4 +1,4 @@
-import {Form, Storage} from "../../CROWDR";
+import {Form, RegionModel, Storage} from "../../CROWDR";
 
 export default class RegionForm extends Form {
 	name = '';
@@ -16,12 +16,10 @@ export default class RegionForm extends Form {
 	toiletCount = 1;
 
 	trashBinCount = 1;
-	
-	getRegionSize() {
-		return 15*15;
-	}
 
-	getFilledFieldCount() {
+	getRegionSize = () => 15 * 15;
+	
+	getFilledFieldCount = () => {
 		let fieldsFilled = 0;
 
 		if (this.tentCount) {
@@ -57,21 +55,15 @@ export default class RegionForm extends Form {
 		}
 
 		return fieldsFilled;
-	}
+	};
 
-	getPercentageFilled() {
-		return 100 / this.getRegionSize() * this.getFilledFieldCount();
-	}
+	getPercentageFilled = () => 100 / this.getRegionSize() * this.getFilledFieldCount();
 
-	getPercentageLeft() {
-		return 100 - this.getPercentageFilled();
-	}
+	getPercentageLeft = () => 100 - this.getPercentageFilled();
 	
-	getMaximumTrashBins() {
-		return Math.round(this.getPercentageLeft() / 20);
-	}
+	getMaximumTrashBins = () => Math.round(this.getPercentageLeft() / 20);
 
-	validate() {
+	validate = () => {
 		let invalidFields = {};
 
 		if (!this.name) {
@@ -169,5 +161,5 @@ export default class RegionForm extends Form {
 		}
 
 		return invalidFields;
-	}
+	};
 }

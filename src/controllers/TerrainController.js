@@ -1,18 +1,14 @@
-import {TerrainView, BaseController, Storage} from "../CROWDR";
+import {TerrainView, BaseController} from "../CROWDR";
 
 export default class TerrainController extends BaseController {
 
 	constructor(mainController) {
 		super(mainController);
 		this.terrainView = new TerrainView();
-		this.terrainView.selectRegion(this.selectRegion);
-
-		this.terrainView.loadRegion(Storage.getRegion("Test"))
+		this.terrainView.setRegionSelectedEvent(this.mainController.regionChanged);
 	}
 	
-	selectRegion(region){
-		
-		this.mainController.regionChanged(region);
-		
-	}
+	loadRegion = (region) => {
+		this.terrainView.loadRegion(region);
+	};
 }

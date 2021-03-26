@@ -1,5 +1,5 @@
 // Controllers
-import Controller  from './controllers/Controller';
+import Controller from './controllers/Controller';
 import BaseController from './controllers/BaseController';
 import GridController from './controllers/GridController';
 import MainController from './controllers/MainController';
@@ -9,8 +9,6 @@ import TerrainController from './controllers/TerrainController';
 
 // Models
 import Model from './models/Model';
-import GridModel from './models/GridModel';
-import PlacebleModel from './models/PlaceableModel';
 
 // Forms
 import Form from './models/forms/Form';
@@ -48,9 +46,7 @@ export {
 	RegionForm,
 
 	// Models
-	PlacebleModel,
 	Model,
-	GridModel,
 
 	// Views
 	View,
@@ -58,14 +54,14 @@ export {
 	MainView,
 	TerrainView,
 	PlaceableView,
-	
+
 	// Components
 	Component,
 	CardComponent,
 	ModalComponent,
 	NavbarComponent,
 	PlaceableComponent,
-	
+
 	// Helpers
 	Storage
 }
