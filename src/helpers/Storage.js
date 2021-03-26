@@ -109,10 +109,12 @@ export default class Storage {
 		const regions = this.getRegions();
 
 		for (let region of regions) {
-			if (region.name === regionName) {
+			if (region.name.toUpperCase() === regionName.toUpperCase()) {
 				return region;
 			}
 		}
+		
+		return null;
 	}
 
 	static placePlaceable(region, placeable) {
