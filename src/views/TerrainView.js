@@ -23,15 +23,16 @@ export default class TerrainView extends View {
 		this.region = region;
 
 		this.renderTable();
+		this.renderNav();
 	};
 
 	renderNav = () => {
-		let regions = Storage.getRegions();
-
-		regions.forEach(region => {
-			this.listItem = this.createElement('li', 'nav-item');
-
+		this.nav.innerHTML = '';
+		
+		Storage.getRegions().forEach(region => {
+			const listItem = this.createElement('li', 'nav-item');
 			const listItemLink = this.createElement('a', 'nav-link');
+			
 			listItemLink.dataset.region = region.name;
 
 			listItemLink.addEventListener('click', e => {
@@ -41,9 +42,9 @@ export default class TerrainView extends View {
 
 			listItemLink.innerText = region.name;
 
-			this.listItem.append(listItemLink);
-			this.nav.append(this.listItem);
-
+			listItem.append(listItemLink);
+			
+			this.nav.append(listItem);
 		});
 	};
 
@@ -78,7 +79,6 @@ export default class TerrainView extends View {
 					const placeableItem = document.getElementById(e.dataTransfer.getData('text/plain'));
 
 					if (placeableItem) {
-
 						if (parseInt(dropZone.dataset.row) + parseInt(placeableItem.dataset.height) > 16) {
 							return false;
 						}
