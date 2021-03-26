@@ -12,7 +12,7 @@ export default class Storage {
 			for (let i = 0; i < regionForm.tentCount; i++) {
 				objects.push({
 					id: id++,
-					type: 'tree',
+					type: 'tent',
 					width: 3,
 					height: 3
 				})
@@ -97,8 +97,12 @@ export default class Storage {
 		}
 	}
 	
+	static getRegions() {
+		return JSON.parse(localStorage.getItem('regions') || "[]");
+	}
+	
 	static getRegion(regionName) {
-		const regions = JSON.parse(localStorage.getItem('regions') || "[]");
+		const regions = this.getRegions();
 
 		for (let region of regions) {
 			if (region.name === regionName) {
