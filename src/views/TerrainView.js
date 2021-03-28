@@ -5,9 +5,10 @@ export default class TerrainView extends View {
 		super();
 
 		this.app = this.getElement('#terrainController');
-
 		this.table = this.createElement('table', 'table table-bordered terrain-table');
 		this.nav = this.createElement('ul', 'nav nav-tabs');
+		this.icon = this.createElement('img');
+		
 
 		this.app.append(this.nav);
 		this.app.append(this.table);
@@ -17,6 +18,10 @@ export default class TerrainView extends View {
 		this.onRegionSelected = regionChanged;
 	};
 
+	getWeatherInfo() {
+		
+	};
+	
 	loadRegion(region) {
 		this.region = region;
 
@@ -47,6 +52,14 @@ export default class TerrainView extends View {
 			listItem.append(listItemLink);
 			this.nav.append(listItem);
 		});
+		
+		const weatherInfo = this.loadWeather();
+		console.log(weatherInfo);
+		
+		
+		this.icon.src = `https://openweathermap.org/img/wn/${weatherInfo[0]["weather"]["icon"]}@2x.png`;
+		this.nav.append(this.icon);
+		
 	};
 
 	renderTable() {
@@ -132,4 +145,7 @@ export default class TerrainView extends View {
 
 		return true;
 	};
+
+
+	
 }
