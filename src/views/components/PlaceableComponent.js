@@ -12,8 +12,11 @@ export default class PlaceableComponent extends Component {
 	render() {
 		const element = this.createElement('div', 'draggable-item', `draggable-item-${this.item.id}`);
 
-		element.style.height = `${this.cellSize * this.item.height}px`;
-		element.style.width = `${this.cellSize * this.item.width}px`;
+		const height = this.cellSize * this.item.height;
+		const width = this.cellSize * this.item.width;
+
+		element.style.height = `${height}px`;
+		element.style.width = `${width}px`;
 
 		element.dataset.id = this.item.id;
 		element.dataset.type = this.item.type;
@@ -24,8 +27,10 @@ export default class PlaceableComponent extends Component {
 
 		canvas.style.width = '100%';
 		canvas.style.height = '100%';
+		canvas.height = height;
+		canvas.width = width;
 
-		const canvasImage = new Image(this.cellSize, this.cellSize);
+		const canvasImage = new Image();
 		canvasImage.src = `/image/tiles/${this.item.type}.png`;
 
 		const canvasContext = canvas.getContext("2d");
