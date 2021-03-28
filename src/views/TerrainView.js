@@ -8,7 +8,7 @@ export default class TerrainView extends View {
 		this.table = this.createElement('table', 'table table-bordered terrain-table');
 		this.nav = this.createElement('ul', 'nav nav-tabs');
 		this.icon = this.createElement('img');
-		
+
 
 		this.app.append(this.nav);
 		this.app.append(this.table);
@@ -19,9 +19,9 @@ export default class TerrainView extends View {
 	};
 
 	getWeatherInfo() {
-		
+
 	};
-	
+
 	loadRegion(region) {
 		this.region = region;
 
@@ -31,7 +31,7 @@ export default class TerrainView extends View {
 
 	renderNav(selectedRegion) {
 		this.nav.innerHTML = '';
-		
+
 		Storage.getRegions().forEach(region => {
 			const listItem = this.createElement('li', 'nav-item');
 			const listItemLink = this.createElement('a', 'nav-link');
@@ -48,18 +48,10 @@ export default class TerrainView extends View {
 				const regionName = e.target.dataset.region;
 				this.onRegionSelected(Storage.getRegion(regionName));
 			});
-			
+
 			listItem.append(listItemLink);
 			this.nav.append(listItem);
 		});
-		
-		const weatherInfo = this.loadWeather();
-		console.log(weatherInfo);
-		
-		
-		this.icon.src = `https://openweathermap.org/img/wn/${weatherInfo[0]["weather"]["icon"]}@2x.png`;
-		this.nav.append(this.icon);
-		
 	};
 
 	renderTable() {
@@ -131,9 +123,13 @@ export default class TerrainView extends View {
 		}
 	};
 
+	weatherLoaded(weatherInfo) {
+		this.icon.src = `https://openweathermap.org/img/wn/${weatherInfo.weather[0].icon}@2x.png`;
+		this.nav.append(this.icon);
+	}
+
 	hasItem(rowNumber, cellNumber, item) {
 		for (let rowID = 0; rowID < item.dataset.height; rowID++) {
-
 			for (let cellID = 0; cellID < item.dataset.width; cellID++) {
 				let id = `dropzone-${parseInt(rowNumber) + parseInt(rowID)}-${parseInt(cellNumber) + parseInt(cellID)}`;
 				let cell = document.getElementById(id);
@@ -145,7 +141,4 @@ export default class TerrainView extends View {
 
 		return true;
 	};
-
-
-	
 }
