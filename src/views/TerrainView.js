@@ -99,6 +99,7 @@ export default class TerrainView extends View {
 							cell: parseInt(dropZone.dataset.cell),
 							height: parseInt(placeableItem.dataset.height),
 							width: parseInt(placeableItem.dataset.width),
+							props: JSON.parse(placeableItem.dataset.props)
 						});
 
 						this.region = Storage.getRegion(this.region.name);
