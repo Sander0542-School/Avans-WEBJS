@@ -17,13 +17,13 @@ export default class TerrainController extends BaseController {
 	loadWeather() {
 		const API_KEY = 'e98e09391c539738e406cbea8d253955';
 
-		fetch('https://api.openweathermap.org/data/2.5/weather?id=2756252&appid=' + API_KEY)
+		fetch('https://api.openweathermap.org/data/2.5/weather?id=5392171&appid=' + API_KEY)
 			.then(response => response.json())
 			.then(json => {
 				this.terrainView.weatherLoaded(json);
 			})
 			.catch((e) => {
-				
+				console.log(`Fout bij het inladen van de weer api: ${e}`)
 			});
 	}
 

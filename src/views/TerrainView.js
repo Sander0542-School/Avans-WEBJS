@@ -7,7 +7,7 @@ export default class TerrainView extends View {
 		this.app = this.getElement('#terrainController');
 		this.table = this.createElement('table', 'table table-bordered terrain-table');
 		this.nav = this.createElement('ul', 'nav nav-tabs');
-		this.icon = this.createElement('img');
+		this.icon = this.createElement('img', 'weather-icon');
 
 
 		this.app.append(this.nav);
@@ -125,6 +125,7 @@ export default class TerrainView extends View {
 
 	weatherLoaded(weatherInfo) {
 		this.icon.src = `https://openweathermap.org/img/wn/${weatherInfo.weather[0].icon}@2x.png`;
+		
 		this.nav.append(this.icon);
 	}
 
