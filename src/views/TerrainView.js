@@ -32,6 +32,7 @@ export default class TerrainView extends View {
 			const listItemLink = this.createElement('a', 'nav-link');
 
 			listItemLink.innerText = region.name;
+			listItemLink.href = `#${region.name}`;
 			listItemLink.dataset.region = region.name;
 
 			if (selectedRegion.name === region.name) {

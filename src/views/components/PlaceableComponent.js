@@ -20,8 +20,9 @@ export default class PlaceableComponent extends Component {
 
 		element.dataset.id = this.item.id;
 		element.dataset.type = this.item.type;
-		element.dataset.width = this.item.width;
-		element.dataset.height = this.item.height;
+		element.dataset.width = this.item.width || "1";
+		element.dataset.height = this.item.height || "1";
+		element.dataset.props = JSON.stringify(this.item.props || "[]");
 
 		const canvas = this.createElement('canvas');
 
