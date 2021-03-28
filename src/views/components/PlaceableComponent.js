@@ -31,12 +31,14 @@ export default class PlaceableComponent extends Component {
 		canvas.width = width;
 
 		const canvasImage = new Image();
-		canvasImage.src = `/image/tiles/${this.item.type}.png`;
+		canvasImage.src = `/assets/tiles/${this.item.type}.jpg`;
+		
+		canvasImage.onload = () => {
+			const canvasContext = canvas.getContext("2d");
+			canvasContext.drawImage(canvasImage, 0, 0, canvasImage.width, canvasImage.height, 0, 0, canvas.width, canvas.height);
 
-		const canvasContext = canvas.getContext("2d");
-		canvasContext.drawImage(canvasImage, 0, 0, canvasImage.width, canvasImage.height, 0, 0, canvas.width, canvas.height);
-
-		element.append(canvas);
+			element.append(canvas);
+		}
 
 		element.setAttribute('draggable', true);
 		element.addEventListener('dragstart', e => {
