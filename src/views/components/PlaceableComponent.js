@@ -1,11 +1,18 @@
-import {Component} from "../../CROWDR";
+import {
+	Component,
+	FoodSettingsFormComponent,
+	Storage,
+	TentSettingsFormComponent,
+	TrashSettingsFormComponent
+} from "../../CROWDR";
 
 export default class PlaceableComponent extends Component {
 	cellSize = 46;
 
-	constructor(item) {
+	constructor(region, item) {
 		super();
 
+		this.region = region;
 		this.item = item;
 	}
 
@@ -22,7 +29,7 @@ export default class PlaceableComponent extends Component {
 		element.dataset.type = this.item.type;
 		element.dataset.width = this.item.width || "1";
 		element.dataset.height = this.item.height || "1";
-		element.dataset.props = JSON.stringify(this.item.props || "[]");
+		element.dataset.props = JSON.stringify(this.item.props || "{}");
 
 		const canvas = this.createElement('canvas');
 
@@ -40,6 +47,28 @@ export default class PlaceableComponent extends Component {
 
 			element.append(canvas);
 		}
+		
+		let settingsComponent;
+		
+		switch (this.item.type) {
+			case "tent":
+				settingsComponent = new TentSettingsFormComponent('settingsForm', (form) => this.saveProps(element, form.getProps()), this.region, this.item);
+				break;
+			case "food":
+				settingsComponent = new FoodSettingsFormComponent('settingsForm', (form) => this.saveProps(element, form.getProps()), this.region, this.item);
+				break;
+			case "trash":
+				settingsComponent = new TrashSettingsFormComponent('settingsForm', (form) => this.saveProps(element, form.getProps()), this.region, this.item);
+				break;
+		}
+		
+		if (settingsComponent) {
+			element.classList.add('c-pointer');
+			element.addEventListener('click', () => {
+				settingsComponent.updateProps(this.getProps(element));
+				settingsComponent.make();
+			})
+		}
 
 		element.setAttribute('draggable', true);
 		element.addEventListener('dragstart', e => {
@@ -47,5 +76,14 @@ export default class PlaceableComponent extends Component {
 		});
 
 		return element;
+	}
+	
+	getProps(element) {
+		return JSON.parse(element.dataset.props);
+	}
+	
+	saveProps(element, props) {
+		Storage.saveProps(this.region, this.item, props);
+		element.dataset.props = JSON.stringify(props || "{}");
 	}
 }

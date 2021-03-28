@@ -13,11 +13,11 @@ export default class PlaceableView extends View {
 		this.app.appendChild(container);
 	};
 
-	loadItems(items) {
+	loadRegion(region) {
 		this.items.innerHTML = '';
 
-		items.forEach(item => {
-			this.items.append(new PlaceableComponent(item).render());
+		region.objects.forEach(item => {
+			this.items.append(new PlaceableComponent(region, item).render());
 		});
 	};
 }
