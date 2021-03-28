@@ -5,14 +5,19 @@ export default class Storage {
 
 			const objects = [];
 
-			let id = 0;
+			let id = 1;
 
 			for (let i = 0; i < regionForm.tentCount; i++) {
 				objects.push({
 					id: id++,
 					type: 'tent',
 					width: 3,
-					height: 3
+					height: 3,
+					props: {
+						maxVisitors: 10,
+						opensAt: "12:00",
+						closesAt: "03:00"
+					}
 				})
 			}
 
@@ -21,7 +26,11 @@ export default class Storage {
 					id: id++,
 					type: 'food',
 					width: 1,
-					height: 1
+					height: 1,
+					props: {
+						maxVisitors: 10,
+						foodType: 'Burgers'
+					}
 				})
 			}
 
@@ -30,7 +39,8 @@ export default class Storage {
 					id: id++,
 					type: 'drink',
 					width: 2,
-					height: 1
+					height: 1,
+					props: {}
 				})
 			}
 
@@ -57,7 +67,8 @@ export default class Storage {
 					id: id++,
 					type: 'tree_' + regionForm.treeType,
 					width: treeWidth,
-					height: treeHeight
+					height: treeHeight,
+					props: {}
 				})
 			}
 
@@ -66,7 +77,8 @@ export default class Storage {
 					id: id++,
 					type: 'toilet',
 					width: 3,
-					height: 1
+					height: 1,
+					props: {}
 				})
 			}
 
@@ -75,7 +87,8 @@ export default class Storage {
 					id: id++,
 					type: 'trash',
 					width: 1,
-					height: 1
+					height: 1,
+					props: {}
 				})
 			}
 
@@ -159,6 +172,47 @@ export default class Storage {
 
 		// Add placeable to terrain
 		regions[regionId].terrain.push(placeable);
+
+		this.saveRegions(regions);
+
+		return true;
+	};
+
+	static saveProps(region, placeable, props) {
+		if (!region || !placeable || !props) {
+			return false;
+		}
+
+		const regions = this.getRegions();
+
+		let regionId = null;
+
+		for (let i = 0; i < regions.length; i++) {
+			if (regions[i].name === region.name) {
+				regionId = i;
+				break;
+			}
+		}
+
+		if (regionId === null) {
+			return false;
+		}
+
+		// Update placeable in objects if possible
+		for (let i = 0; i < regions[regionId].objects.length; i++) {
+			if (regions[regionId].objects[i].id === placeable.id) {
+				regions[regionId].objects[i].props = props;
+				break;
+			}
+		}
+
+		// Update placeable in terrain if possible
+		for (let i = 0; i < regions[regionId].terrain.length; i++) {
+			if (regions[regionId].terrain[i].id === placeable.id) {
+				regions[regionId].terrain[i].props = props;
+				break;
+			}
+		}
 
 		this.saveRegions(regions);
 

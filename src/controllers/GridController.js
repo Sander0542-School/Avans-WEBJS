@@ -6,7 +6,7 @@ export default class GridController extends BaseController {
 		this.gridView = new GridView();
 
 		this.gridView.setGridCreatedEvent(regionForm => this.regionCreated(regionForm));
-		this.gridView.formChanged();
+		// this.gridView.formChanged();
 	}
 	
 	regionCreated(regionForm) {

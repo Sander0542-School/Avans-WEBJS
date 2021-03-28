@@ -69,6 +69,20 @@ export default class View {
 
 		return option;
 	};
+	
+	createHelpText(errorText, elemId) {
+		const help = this.createElement('small', 'form-text text-muted', `${elemId}Help`);
+		help.innerText = errorText;
+		
+		return help;
+	}
+	
+	createInvalidFeedback(errorText, elemId) {
+		const feedback = this.createElement('div', 'invalid-feedback', `${elemId}Feedback`);
+		feedback.innerText = errorText;
+		
+		return feedback;
+	}
 
 	createFormGroup(inputElem, labelText, errorText) {
 		const group = this.createElement('div', 'form-group');
@@ -88,11 +102,7 @@ export default class View {
 			inputElem.classList.add(isValid ? 'is-valid' : 'is-invalid');
 
 			if (!isValid && errorText) {
-				const validation = this.createElement('div', '', `${inputElem.id}Help`);
-				validation.innerText = errorText;
-				validation.classList.add('invalid-feedback');
-
-				group.append(validation);
+				group.append(this.createInvalidFeedback(errorText, `${inputElem.id}Help`));
 			}
 		}
 
