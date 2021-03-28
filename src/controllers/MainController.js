@@ -22,13 +22,23 @@ export default class MainController extends Controller {
 	}
 
 	loadDefaultRegion() {
-		const region = Storage.getRegions()[0];
+		let region = null;
+
+		if (window.location.hash) {
+			region = Storage.getRegion(window.location.hash.substring(1));
+		}
+
+		if (!region) {
+			region = Storage.getRegions()[0];
+		}
+
 		if (region != null) {
 			this.regionChanged(region);
 		}
 	}
 
 	regionChanged(region) {
+		window.location.hash = `#${region.name}`;
 		this.terrainController.loadRegion(region);
 		this.placeableController.loadRegion(region);
 	}

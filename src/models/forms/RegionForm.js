@@ -1,4 +1,4 @@
-import {Form, RegionModel, Storage} from "../../CROWDR";
+import {Form, Storage} from "../../CROWDR";
 
 export default class RegionForm extends Form {
 	name = '';
@@ -72,7 +72,7 @@ export default class RegionForm extends Form {
 	};
 
 	validate() {
-		let invalidFields = {};
+		let invalidFields = super.validate();
 
 		if (!this.name) {
 			invalidFields['name'] = 'The name is required';

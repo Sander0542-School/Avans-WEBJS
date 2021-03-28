@@ -64,7 +64,7 @@ export default class TerrainView extends View {
 				for (let terrain of this.region.terrain) {
 					if (terrain.row === rowId && terrain.cell === cellId) {
 						dropzone.classList.remove('dropable');
-						dropzone.append(new PlaceableComponent(terrain).render());
+						dropzone.append(new PlaceableComponent(this.region, terrain).render());
 						break;
 					}
 				}
@@ -99,11 +99,10 @@ export default class TerrainView extends View {
 							cell: parseInt(dropZone.dataset.cell),
 							height: parseInt(placeableItem.dataset.height),
 							width: parseInt(placeableItem.dataset.width),
+							props: JSON.parse(placeableItem.dataset.props)
 						});
 
 						this.region = Storage.getRegion(this.region.name);
-
-						console.log(success);
 					}
 				});
 
