@@ -51,8 +51,8 @@ export default class FormComponent extends Component {
 	getForm() {
 	}
 
-	createSubmitButton(title = "Save") {
-		const button = this.createElement('button', 'btn btn-success', 'settingsSubmit');
+	createSubmitButton(id, title = "Save") {
+		const button = this.createElement('button', 'btn btn-success', id);
 		button.innerText = title;
 		button.addEventListener('click', () => {
 			this.submitForm(this.getForm());
