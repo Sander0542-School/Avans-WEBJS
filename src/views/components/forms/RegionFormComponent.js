@@ -61,7 +61,7 @@ export default class RegionFormComponent extends FormComponent {
 		formElements.forEach(formElement => this.getFormElement().append(formElement));
 
 		if (form.isValid()) {
-			this.getFormElement().append(this.createSubmitButton("Create"));
+			this.getFormElement().append(this.createSubmitButton('regionSubmit', "Create"));
 		}
 
 		const resetButton = this.createElement('button', 'btn btn-danger float-right');

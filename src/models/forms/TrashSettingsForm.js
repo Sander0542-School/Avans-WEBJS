@@ -24,7 +24,7 @@ export default class TrashSettingsForm extends SettingsForm {
 		if (!this.clearsAt) {
 			invalidFields['clearsAt'] = 'The clear time is required';
 		} else {
-			if (!moment(this.clearsAt, "HH:mm", true).isValid()) {
+			if (!moment(this.clearsAt, 'HH:mm', true).isValid()) {
 				invalidFields['clearsAt'] = 'The clears at time is not valid';
 			}
 		}

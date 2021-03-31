@@ -27,6 +27,8 @@
 }
 
 table.terrain-table {
+	table-layout: fixed;
+	
 	.draggable-item {
 		position: absolute;
 	}

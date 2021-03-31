@@ -26,7 +26,7 @@ export default class TentSettingsForm extends SettingsForm {
 		if (!this.opensAt) {
 			invalidFields['opensAt'] = 'The opening time is required';
 		} else {
-			if (!moment(this.opensAt, "HH:mm", true).isValid()) {
+			if (!moment(this.opensAt, 'HH:mm', true).isValid()) {
 				invalidFields['opensAt'] = 'The opens at time is not valid';
 			}
 		}
@@ -34,7 +34,7 @@ export default class TentSettingsForm extends SettingsForm {
 		if (!this.closesAt) {
 			invalidFields['closesAt'] = 'The closing time is required';
 		} else {
-			if (!moment(this.closesAt, "HH:mm", true).isValid()) {
+			if (!moment(this.closesAt, 'HH:mm', true).isValid()) {
 				invalidFields['closesAt'] = 'The opens at time is not valid';
 			}
 		}

@@ -37,7 +37,7 @@ export default class TentSettingsFormComponent extends SettingsFormComponent {
 			formElements.forEach(formElement => this.getFormElement().append(formElement));
 
 			if (form.isValid()) {
-				this.getFormElement().append(this.createSubmitButton());
+				this.getFormElement().append(this.createSubmitButton('settingsSubmit'));
 			}
 		}
 	}
