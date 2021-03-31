@@ -1,12 +1,12 @@
 import {CardComponent, NavbarComponent, View} from "../CROWDR";
 
 export default class MainView extends View {
-	constructor() {
+	constructor(locationChanged) {
 		super();
 		
 		this.app = this.getElement('#app');
 		
-		const navbar = new NavbarComponent('CROWDR').render();
+		const navbar = new NavbarComponent('CROWDR', (location) => locationChanged(location)).render();
 		
 		const container = this.createElement('main', 'm-5');
 		const row = this.createElement('div', 'row');

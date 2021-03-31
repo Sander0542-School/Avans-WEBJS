@@ -5,11 +5,12 @@ export default class TerrainView extends View {
 		super();
 
 		this.app = this.getElement('#terrainController');
+		this.weatherBar = this.createElement('div', 'd-flex');
 		this.table = this.createElement('table', 'table table-bordered terrain-table');
 		this.nav = this.createElement('ul', 'nav nav-tabs');
 		this.icon = this.createElement('img', 'weather-icon');
 
-
+		this.app.append(this.weatherBar);
 		this.app.append(this.nav);
 		this.app.append(this.table);
 	};
@@ -24,10 +25,11 @@ export default class TerrainView extends View {
 
 	loadRegion(region) {
 		this.region = region;
-
-		this.renderTable(region);
 		this.renderNav(region);
+		this.renderTable();
+		
 	};
+	
 
 	renderNav(selectedRegion) {
 		this.nav.innerHTML = '';
@@ -124,8 +126,8 @@ export default class TerrainView extends View {
 
 	weatherLoaded(weatherInfo) {
 		this.icon.src = `https://openweathermap.org/img/wn/${weatherInfo.weather[0].icon}@2x.png`;
-		
-		this.nav.append(this.icon);
+		// this.icon.classList.add("ml-auto p-2");
+		this.weatherBar.append(this.icon);
 	}
 
 	hasItem(rowNumber, cellNumber, item) {

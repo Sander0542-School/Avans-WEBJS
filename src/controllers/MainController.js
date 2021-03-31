@@ -11,7 +11,7 @@ import {
 export default class MainController extends Controller {
 	constructor() {
 		super();
-		this.mainView = new MainView();
+		this.mainView = new MainView((location) => this.locationChanged(location));
 
 		this.gridController = new GridController(this);
 		this.settingsController = new SettingsController(this);
@@ -19,8 +19,14 @@ export default class MainController extends Controller {
 		this.placeableController = new PlaceableController(this);
 
 		this.loadDefaultRegion();
+		this.loadDefaultLocation();
 	}
 
+	loadDefaultLocation() {
+		let locationWeather = '5392171';
+		this.locationChanged(locationWeather)
+	}
+	
 	loadDefaultRegion() {
 		let region = null;
 
@@ -37,6 +43,10 @@ export default class MainController extends Controller {
 		}
 	}
 
+	locationChanged(locationWeather) {
+		this.terrainController.loadWeather(locationWeather);
+	}
+	
 	regionChanged(region) {
 		window.location.hash = `#${region.name}`;
 		this.terrainController.loadRegion(region);
