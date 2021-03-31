@@ -8,11 +8,11 @@ export default class TerrainView extends View {
 		this.weatherBar = this.createElement('div', 'd-flex');
 		this.table = this.createElement('table', 'table table-bordered terrain-table');
 		this.nav = this.createElement('ul', 'nav nav-tabs');
-		this.icon = this.createElement('img', 'weather-icon');
 
-		this.app.append(this.weatherBar);
-		this.app.append(this.nav);
-		this.app.append(this.table);
+		this.icon = this.createElement('img', 'weather-icon');
+		this.actions = this.createElement('div');
+
+		this.app.append(this.weatherBar, this.nav, this.table, this.actions);
 	};
 
 	setRegionSelectedEvent(regionChanged) {
@@ -23,6 +23,7 @@ export default class TerrainView extends View {
 		this.region = region;
 		this.renderNav(region);
 		this.renderTable();
+		this.renderActions(region);
 
 	};
 
@@ -52,7 +53,7 @@ export default class TerrainView extends View {
 		});
 	};
 
-	renderTable() {
+	renderTable(region) {
 		this.table.innerHTML = '';
 
 		for (let rowId = 1; rowId <= 15; rowId++) {
@@ -64,16 +65,16 @@ export default class TerrainView extends View {
 				dropzone.dataset.row = rowId;
 				dropzone.dataset.cell = cellId;
 
-				for (let terrain of this.region.terrain) {
+				for (const terrain of region.terrain) {
 					if (terrain.row === rowId && terrain.cell === cellId) {
 						dropzone.classList.remove('dropable');
-						dropzone.append(new PlaceableComponent(this.region, terrain).render());
+						dropzone.append(new PlaceableComponent(region, terrain).render());
 						break;
 					}
 				}
 
 				dropzone.addEventListener('dragover', (e) => {
-					if (e.target.classList.contains('dropable')) {
+					if (e.target.classList.contains('dropable') && region.locked === false) {
 						e.preventDefault();
 					}
 				});
@@ -95,7 +96,7 @@ export default class TerrainView extends View {
 						dropZone.classList.remove('dropable');
 						dropZone.appendChild(placeableItem);
 
-						const success = Storage.placePlaceable(this.region, {
+						Storage.placePlaceable(region, {
 							id: parseInt(placeableItem.dataset.id),
 							type: placeableItem.dataset.type,
 							row: parseInt(dropZone.dataset.row),
@@ -105,7 +106,7 @@ export default class TerrainView extends View {
 							props: JSON.parse(placeableItem.dataset.props)
 						});
 
-						this.region = Storage.getRegion(this.region.name);
+						this.loadRegion(Storage.getRegion(region.name));
 					}
 				});
 
@@ -124,7 +125,22 @@ export default class TerrainView extends View {
 		this.icon.src = `https://openweathermap.org/img/wn/${weatherInfo.weather[0].icon}@2x.png`;
 		// this.icon.classList.add("ml-auto p-2");
 		this.weatherBar.append(this.icon);
+  }
+  
+	renderActions(region) {
+		this.actions.innerHTML = '';
+
+		if (region.locked === false && region.objects.length === 0) {
+			const lockButton = this.createElement('button', 'btn btn-danger');
+			lockButton.innerText = 'Lock region';
+			lockButton.addEventListener('click', () => {
+				Storage.lockRegion(region);
+				this.loadRegion(Storage.getRegion(region.name));
+			})
+			this.actions.append(lockButton);
 	}
+
+	
 
 	hasItem(rowNumber, cellNumber, item) {
 		for (let rowID = 0; rowID < item.dataset.height; rowID++) {

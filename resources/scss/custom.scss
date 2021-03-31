@@ -31,6 +31,8 @@
 }
 
 table.terrain-table {
+	table-layout: fixed;
+	
 	.draggable-item {
 		position: absolute;
 	}
@@ -43,5 +45,13 @@ table.terrain-table {
 	tr td {
 		padding: 0 !important;
 		margin: 0 !important;
+	}
+}
+
+.simulation-list {
+	display: grid;
+	
+	> .simulation-canvas {
+		margin: 8px;
 	}
 }

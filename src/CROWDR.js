@@ -6,6 +6,7 @@ import MainController from './controllers/MainController';
 import PlaceableController from './controllers/PlaceableController';
 import SettingsController from './controllers/SettingsController';
 import TerrainController from './controllers/TerrainController';
+import SimulationController from './controllers/SimulationController';
 
 // Models
 import Model from './models/Model';
@@ -25,6 +26,7 @@ import MainView from './views/MainView';
 import TerrainView from './views/TerrainView';
 import PlaceableView from './views/PlaceableView';
 import SettingsView from './views/SettingsView';
+import SimulationView from './views/SimulationView';
 
 // Components
 import Component from './views/components/Component';
@@ -52,6 +54,7 @@ export {
     PlaceableController,
     SettingsController,
     TerrainController,
+	SimulationController,
 
     // Forms
     Form,
@@ -71,6 +74,7 @@ export {
     TerrainView,
     PlaceableView,
     SettingsView,
+	SimulationView,
 
     // Components
     Component,

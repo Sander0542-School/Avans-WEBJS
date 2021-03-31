@@ -3,7 +3,7 @@ import {
 	GridController,
 	MainView,
 	PlaceableController,
-	SettingsController,
+	SettingsController, SimulationController,
 	Storage,
 	TerrainController
 } from "../CROWDR";
@@ -13,10 +13,20 @@ export default class MainController extends Controller {
 		super();
 		this.mainView = new MainView((location) => this.locationChanged(location));
 
+		window.onhashchange = ev => this.loadDefaultRegion();
+
+		this.loadDefaultRegion();
+	}
+
+	renderCreate() {
+		this.mainView.renderCreate();
+
 		this.gridController = new GridController(this);
 		this.settingsController = new SettingsController(this);
 		this.terrainController = new TerrainController(this);
 		this.placeableController = new PlaceableController(this);
+	}
+
 
 		this.loadDefaultRegion();
 		this.loadDefaultLocation();
@@ -25,12 +35,23 @@ export default class MainController extends Controller {
 	loadDefaultLocation() {
 		let locationWeather = '5392171';
 		this.locationChanged(locationWeather)
+  }
+
+	async renderSimulation() {
+		this.mainView.renderSimulation();
+
+		this.simulationController = new SimulationController(this);
+		this.simulationController.startSimulation().then();
 	}
 
 	loadDefaultRegion() {
 		let region = null;
 
 		if (window.location.hash) {
+			if (window.location.hash === '#simulation') {
+				this.renderSimulation();
+				return;
+			}
 			region = Storage.getRegion(window.location.hash.substring(1));
 		}
 
@@ -49,6 +70,8 @@ export default class MainController extends Controller {
 
 	regionChanged(region) {
 		window.location.hash = `#${region.name}`;
+
+		this.renderCreate();
 		this.terrainController.loadRegion(region);
 		this.placeableController.loadRegion(region);
 	}

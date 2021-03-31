@@ -1,5 +1,6 @@
-import {TerrainView, BaseController} from "../CROWDR";
+import {TerrainView, BaseController, Simulation} from "../CROWDR";
 import 'regenerator-runtime/runtime'
+
 
 export default class TerrainController extends BaseController {
 
