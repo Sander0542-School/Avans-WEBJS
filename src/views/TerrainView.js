@@ -5,12 +5,14 @@ export default class TerrainView extends View {
 		super();
 
 		this.app = this.getElement('#terrainController');
-
+		this.weatherBar = this.createElement('div', 'd-flex');
 		this.table = this.createElement('table', 'table table-bordered terrain-table');
 		this.nav = this.createElement('ul', 'nav nav-tabs');
+
+		this.icon = this.createElement('img', 'weather-icon');
 		this.actions = this.createElement('div');
 
-		this.app.append(this.nav, this.table, this.actions);
+		this.app.append(this.weatherBar, this.nav, this.table, this.actions);
 	};
 
 	setRegionSelectedEvent(regionChanged) {
@@ -19,11 +21,12 @@ export default class TerrainView extends View {
 
 	loadRegion(region) {
 		this.region = region;
-
-		this.renderTable(region);
 		this.renderNav(region);
+		this.renderTable();
 		this.renderActions(region);
+
 	};
+
 
 	renderNav(selectedRegion) {
 		this.nav.innerHTML = '';
@@ -118,6 +121,12 @@ export default class TerrainView extends View {
 		}
 	};
 
+	weatherLoaded(weatherInfo) {
+		this.icon.src = `https://openweathermap.org/img/wn/${weatherInfo.weather[0].icon}@2x.png`;
+		// this.icon.classList.add("ml-auto p-2");
+		this.weatherBar.append(this.icon);
+  }
+  
 	renderActions(region) {
 		this.actions.innerHTML = '';
 
@@ -129,12 +138,12 @@ export default class TerrainView extends View {
 				this.loadRegion(Storage.getRegion(region.name));
 			})
 			this.actions.append(lockButton);
-		}
 	}
+
+	
 
 	hasItem(rowNumber, cellNumber, item) {
 		for (let rowID = 0; rowID < item.dataset.height; rowID++) {
-
 			for (let cellID = 0; cellID < item.dataset.width; cellID++) {
 				let id = `dropzone-${parseInt(rowNumber) + parseInt(rowID)}-${parseInt(cellNumber) + parseInt(cellID)}`;
 				let cell = document.getElementById(id);
