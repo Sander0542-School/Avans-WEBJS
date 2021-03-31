@@ -5,12 +5,13 @@ export default class TerrainView extends View {
 		super();
 
 		this.app = this.getElement('#terrainController');
-
+		this.weatherBar = this.createElement('div', 'd-flex');
 		this.table = this.createElement('table', 'table table-bordered terrain-table');
 		this.nav = this.createElement('ul', 'nav nav-tabs');
 		this.actions = this.createElement('div');
+		this.icon = this.createElement('img', 'weather-icon');
 
-		this.app.append(this.nav, this.table, this.actions);
+		this.app.append(this.weatherBar, this.nav, this.table, this.actions);
 	};
 
 	setRegionSelectedEvent(regionChanged) {
@@ -117,6 +118,12 @@ export default class TerrainView extends View {
 			this.table.appendChild(tableRow);
 		}
 	};
+	
+	weatherLoaded(weatherInfo) {
+		this.icon.src = `https://openweathermap.org/img/wn/${weatherInfo.weather[0].icon}@2x.png`;
+		// this.icon.classList.add("ml-auto p-2");
+		this.weatherBar.append(this.icon);
+	}
 
 	renderActions(region) {
 		this.actions.innerHTML = '';
@@ -127,7 +134,7 @@ export default class TerrainView extends View {
 			lockButton.addEventListener('click', () => {
 				Storage.lockRegion(region);
 				this.loadRegion(Storage.getRegion(region.name));
-			})
+			});
 			this.actions.append(lockButton);
 		}
 	}

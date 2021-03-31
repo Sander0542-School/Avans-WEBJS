@@ -11,13 +11,23 @@ import {
 export default class MainController extends Controller {
 	constructor() {
 		super();
-		this.mainView = new MainView();
+		this.mainView = new MainView((location) => this.locationChanged(location));
 
 		window.onhashchange = ev => this.loadDefaultRegion();
 
 		this.loadDefaultRegion();
+		this.loadDefaultLocation();
 	}
 
+	loadDefaultLocation() {
+		let locationWeather = '5392171';
+		this.locationChanged(locationWeather)
+	}
+	
+	locationChanged(locationWeather) {
+		this.terrainController.loadWeather(locationWeather);
+	}
+	
 	renderCreate() {
 		this.mainView.renderCreate();
 
