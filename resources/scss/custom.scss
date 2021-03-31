@@ -43,3 +43,11 @@ table.terrain-table {
 		margin: 0 !important;
 	}
 }
+
+.simulation-list {
+	display: grid;
+	
+	> .simulation-canvas {
+		margin: 8px;
+	}
+}

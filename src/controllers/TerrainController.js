@@ -1,4 +1,4 @@
-import {TerrainView, BaseController} from "../CROWDR";
+import {TerrainView, BaseController, Simulation} from "../CROWDR";
 
 export default class TerrainController extends BaseController {
 

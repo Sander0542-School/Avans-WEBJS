@@ -1,4 +1,5 @@
 import '../resources/js/app';
+import "regenerator-runtime/runtime.js";
 
 import {MainController} from './CROWDR';
 

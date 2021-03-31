@@ -18,7 +18,7 @@ export default class Storage {
 						opensAt: "12:00",
 						closesAt: "03:00"
 					}
-				})
+				});
 			}
 
 			for (let i = 0; i < regionForm.foodCount; i++) {
@@ -31,7 +31,7 @@ export default class Storage {
 						maxVisitors: 10,
 						foodType: 'Burgers'
 					}
-				})
+				});
 			}
 
 			for (let i = 0; i < regionForm.drinkCount; i++) {
@@ -41,7 +41,7 @@ export default class Storage {
 					width: 2,
 					height: 1,
 					props: {}
-				})
+				});
 			}
 
 			for (let i = 0; i < regionForm.treeCount; i++) {
@@ -69,7 +69,7 @@ export default class Storage {
 					width: treeWidth,
 					height: treeHeight,
 					props: {}
-				})
+				});
 			}
 
 			for (let i = 0; i < regionForm.toiletCount; i++) {
@@ -79,7 +79,7 @@ export default class Storage {
 					width: 3,
 					height: 1,
 					props: {}
-				})
+				});
 			}
 
 			for (let i = 0; i < regionForm.trashBinCount; i++) {
@@ -88,12 +88,16 @@ export default class Storage {
 					type: 'trash',
 					width: 1,
 					height: 1,
-					props: {}
-				})
+					props: {
+						capacity: 10,
+						clearsAt: '04:00'
+					}
+				});
 			}
 
 			const region = {
 				name: regionForm.name,
+				locked: false,
 				objects: objects,
 				terrain: []
 			}
@@ -218,4 +222,31 @@ export default class Storage {
 
 		return true;
 	};
+
+	static lockRegion(region, locked = true) {
+		if (!region) {
+			return false;
+		}
+
+		const regions = this.getRegions();
+
+		let regionId = null;
+
+		for (let i = 0; i < regions.length; i++) {
+			if (regions[i].name === region.name) {
+				regionId = i;
+				break;
+			}
+		}
+
+		if (regionId === null) {
+			return false;
+		}
+
+		regions[regionId].locked = locked;
+
+		this.saveRegions(regions);
+
+		return true;
+	}
 }
