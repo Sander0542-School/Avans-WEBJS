@@ -26,7 +26,7 @@ export default class MainController extends Controller {
 		let locationWeather = '5392171';
 		this.locationChanged(locationWeather)
 	}
-	
+
 	loadDefaultRegion() {
 		let region = null;
 
@@ -46,7 +46,7 @@ export default class MainController extends Controller {
 	locationChanged(locationWeather) {
 		this.terrainController.loadWeather(locationWeather);
 	}
-	
+
 	regionChanged(region) {
 		window.location.hash = `#${region.name}`;
 		this.terrainController.loadRegion(region);

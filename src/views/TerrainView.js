@@ -19,17 +19,13 @@ export default class TerrainView extends View {
 		this.onRegionSelected = regionChanged;
 	};
 
-	getWeatherInfo() {
-
-	};
-
 	loadRegion(region) {
 		this.region = region;
 		this.renderNav(region);
 		this.renderTable();
-		
+
 	};
-	
+
 
 	renderNav(selectedRegion) {
 		this.nav.innerHTML = '';
