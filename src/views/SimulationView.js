@@ -51,13 +51,14 @@ export default class SimulationView extends View {
 		context.fillRect(0, 0, canvas.width, canvas.height);
 
 		const cellSize = 46;
-
+		let terrainItems = [];
 		for (let rowId = 1; rowId <= 15; rowId++) {
 			for (let cellId = 1; cellId <= 15; cellId++) {
 				let placeable = null;
-
+				
 				for (let terrainItem of region.terrain) {
 					if (terrainItem.row === rowId && terrainItem.cell === cellId) {
+						terrainItems.push(terrainItem);
 						placeable = terrainItem;
 						break;
 					}
@@ -75,12 +76,32 @@ export default class SimulationView extends View {
 
 				image.onload = () => {
 					context.drawImage(image, canvasY, canvasX, placeable.width * cellSize, placeable.height * cellSize);
+					context.globalAlpha = 0.5;
 				}
 			}
 		}
 
 		for (const group of (region.groups || [])) {
-			context.rect(group.x, group.y, 3, 3);
+			
+			let weather = 'rain';
+			if( ["rain", "shower rain", "thunderstorm"].includes(weather)){
+				let obj = terrainItems.find(o => o.type === 'tent');
+
+				let row = this.randomInteger((obj.row -1) * cellSize, (obj.row - 1) * cellSize + obj.width  * cellSize);
+				let cell = this.randomInteger((obj.cell -1 ) * cellSize, (obj.cell - 1) * cellSize + obj.height  * cellSize);
+				
+				group.x = cell;
+				group.y = row;
+				
+				
+				context.rect(cell, row, 3, 3);
+			}
+			else if(["clear sky"].contains(weather)){
+				
+			}
+			else{
+				context.rect(group.x, group.y, 3, 3);
+			}
 		}
 		context.fillStyle = 'red';
 		context.fill();
@@ -99,7 +120,11 @@ export default class SimulationView extends View {
 			}
 		}
 	};
-
+	
+	randomInteger(min, max) {
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	}
+	
 	renderGroup(persons) {
 		this.persons.innerHTML = '';
 		if (persons) {
