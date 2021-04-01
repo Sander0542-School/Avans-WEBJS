@@ -24,10 +24,10 @@ export default class SimulationView extends View {
 		row.append(colLeft, colRight);
 
 		this.app.append(row);
-		
+
 		this.cacheImages();
 	};
-	
+
 	cacheImages() {
 		const types = [
 			'drink',
@@ -39,9 +39,9 @@ export default class SimulationView extends View {
 			'tree_shadow',
 			'tree_wide',
 		];
-		
+
 		this.images = [];
-		
+
 		for (const type of types) {
 			const image = new Image();
 			image.src = `/assets/tiles/${type}.jpg`;
@@ -59,13 +59,13 @@ export default class SimulationView extends View {
 
 		for (const region of regions) {
 			const regionCol = this.createElement('div', 'col-12');
-			
+
 			const regionName = this.createElement('h5');
 			regionName.innerText = region.name;
-			
+
 			const regionVisitors = this.createElement('h6');
 			regionVisitors.innerText = `Visitors: ${region.visitors}/${region.maxVisitors}`;
-			
+
 			const canvas = this.createElement('canvas', 'simulation-canvas');
 			canvas.width = 690;
 			canvas.height = 690;
