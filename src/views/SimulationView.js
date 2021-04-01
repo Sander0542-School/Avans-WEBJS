@@ -10,8 +10,8 @@ export default class SimulationView extends View {
 		const colLeft = this.createElement('div', 'col-8');
 		const colRight = this.createElement('div', 'col-4');
 
-		this.canvases = this.createElement('div', 'simulation-list');
-		const canvasesCard = new CardComponent('Regions', this.canvases).render();
+		this.regions = this.createElement('div', 'row simulation-list');
+		const canvasesCard = new CardComponent('Regions', this.regions).render();
 
 		const settingsCard = new CardComponent('Settings').render();
 
@@ -51,20 +51,29 @@ export default class SimulationView extends View {
 	}
 
 	render(regions) {
-		this.renderCanvases(regions);
+		this.renderRegions(regions);
 	};
 
-	renderCanvases(regions) {
-		this.canvases.innerHTML = '';
+	renderRegions(regions) {
+		this.regions.innerHTML = '';
 
 		for (const region of regions) {
+			const regionCol = this.createElement('div', 'col-12');
+			
+			const regionName = this.createElement('h5');
+			regionName.innerText = region.name;
+			
+			const regionVisitors = this.createElement('h6');
+			regionVisitors.innerText = `Visitors: ${region.visitors}/${region.maxVisitors}`;
+			
 			const canvas = this.createElement('canvas', 'simulation-canvas');
 			canvas.width = 690;
 			canvas.height = 690;
 			canvas.dataset.region = region.name;
 
 			this.renderCanvas(region, canvas);
-			this.canvases.append(canvas);
+			regionCol.append(regionName, regionVisitors, canvas);
+			this.regions.append(regionCol);
 		}
 	}
 
@@ -98,7 +107,7 @@ export default class SimulationView extends View {
 			}
 		}
 
-		for (const group of (region.groups || [])) {
+		for (const group of region.groups) {
 			context.rect(group.x, group.y, 3, 3);
 		}
 		context.fillStyle = 'red';
@@ -109,7 +118,7 @@ export default class SimulationView extends View {
 			const x = e.clientX - rect.left;
 			const y = e.clientY - rect.top;
 
-			for (const group of (region.groups || [])) {
+			for (const group of region.groups) {
 				if (x >= group.x && x <= group.x + 3 && y >= group.y && y <= group.y + 3) {
 					this.renderGroup(group.persons);
 					break;
