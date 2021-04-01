@@ -50,7 +50,7 @@ export default class SimulationController extends BaseController {
 		for (const region of this.regions) {
 			for (const field of region.fields) {
 				for (const group of field.groups) {
-					const weather = this.weather.main;
+					const weather = 'Rain';// this.weather.main;
 					switch (weather) {
 						case 'Thunderstorm':
 						case 'Drizzle':
