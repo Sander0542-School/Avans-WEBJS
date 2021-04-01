@@ -15,10 +15,6 @@ export default class SimulationController extends BaseController {
 		this.lineCountChanged(this.lineCount);
 	}
 
-	weatherChanged(weather) {
-		
-	}
-
 	lineCountChanged(lineCount) {
 		this.lines = this.lines.slice(0, lineCount);
 
@@ -31,7 +27,7 @@ export default class SimulationController extends BaseController {
 		this.tickId++;
 
 		await this.handleLines();
-		
+		await this.handleWeather();
 		this.simulationView.render(this.regions);
 
 		if (this.enabled) {
@@ -39,6 +35,35 @@ export default class SimulationController extends BaseController {
 		}
 	}
 
+	async handleWeather() {
+		for (const region of this.regions) {
+			for (const group of (region.groups || [])) {
+
+				const cellSize = 46;
+				let weather = 'rain';
+				if (["rain", "shower rain", "thunderstorm"].includes(weather)) {
+					if(group.status !== 'rain'){
+						let counter = 0;
+						let obj = region.terrain.filter(o => o.type === 'tent');
+						
+						if(counter >=! obj.length)
+						{
+							group.y = this.randomInt((obj[counter].row - 1) * cellSize, (obj[counter].row - 1) * cellSize + obj[counter].width * cellSize);
+							group.x = this.randomInt((obj[counter].cell - 1) * cellSize, (obj[counter].cell - 1) * cellSize + obj[counter].height * cellSize);
+							group.status = 'rain';
+						}
+						
+					}
+					
+					
+				} else if (["clear sky"].contains(weather)) {
+
+				}
+				
+			}
+		}
+	}
+	
 	async handleLines() {
 		for (let line of this.lines) {
 			line.tick++;
@@ -109,6 +134,6 @@ export default class SimulationController extends BaseController {
 	}
 
 	randomInt(min = 0, max = 3) {
-		return Math.floor(Math.random() * max - min + 1) + min;
+		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 }

@@ -61,6 +61,9 @@ export default class MainController extends Controller {
 
 		if (region != null) {
 			this.regionChanged(region);
+		} else {
+			window.location.hash = '';
+			this.renderCreate();
 		}
 	}
 

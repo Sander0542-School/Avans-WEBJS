@@ -24,7 +24,31 @@ export default class SimulationView extends View {
 		row.append(colLeft, colRight);
 
 		this.app.append(row);
+		
+		this.cacheImages();
 	};
+	
+	cacheImages() {
+		const types = [
+			'drink',
+			'food',
+			'tent',
+			'toilet',
+			'trash',
+			'tree_high',
+			'tree_shadow',
+			'tree_wide',
+		];
+		
+		this.images = [];
+		
+		for (const type of types) {
+			const image = new Image();
+			image.src = `/assets/tiles/${type}.jpg`;
+
+			this.images[type] = image;
+		}
+	}
 
 	render(regions) {
 		this.renderCanvases(regions);
@@ -71,37 +95,12 @@ export default class SimulationView extends View {
 				const canvasX = (rowId - 1) * cellSize;
 				const canvasY = (cellId - 1) * cellSize;
 
-				const image = new Image();
-				image.src = `/assets/tiles/${placeable.type}.jpg`;
-
-				image.onload = () => {
-					context.drawImage(image, canvasY, canvasX, placeable.width * cellSize, placeable.height * cellSize);
-					context.globalAlpha = 0.5;
-				}
+				context.drawImage(this.images[placeable.type], canvasY, canvasX, placeable.width * cellSize, placeable.height * cellSize);
 			}
 		}
 
 		for (const group of (region.groups || [])) {
-			
-			let weather = 'rain';
-			if( ["rain", "shower rain", "thunderstorm"].includes(weather)){
-				let obj = terrainItems.find(o => o.type === 'tent');
-
-				let row = this.randomInteger((obj.row -1) * cellSize, (obj.row - 1) * cellSize + obj.width  * cellSize);
-				let cell = this.randomInteger((obj.cell -1 ) * cellSize, (obj.cell - 1) * cellSize + obj.height  * cellSize);
-				
-				group.x = cell;
-				group.y = row;
-				
-				
-				context.rect(cell, row, 3, 3);
-			}
-			else if(["clear sky"].contains(weather)){
-				
-			}
-			else{
 				context.rect(group.x, group.y, 3, 3);
-			}
 		}
 		context.fillStyle = 'red';
 		context.fill();
