@@ -2,7 +2,9 @@ import {BaseController, SimulationView, Storage} from "../CROWDR";
 
 export default class SimulationController extends BaseController {
 
-	ticksPerSecond = 1;
+	ticksPerSecond = 20;
+	maxPerRegion = 15 * 15 * 7;
+
 	tickId = 0;
 	lines = [];
 	regions = [];
@@ -13,6 +15,10 @@ export default class SimulationController extends BaseController {
 		super(mainController);
 		this.simulationView = new SimulationView();
 		this.lineCountChanged(this.lineCount);
+	}
+
+	weatherChanged(weather) {
+
 	}
 
 	lineCountChanged(lineCount) {
@@ -28,6 +34,7 @@ export default class SimulationController extends BaseController {
 
 		await this.handleLines();
 		await this.handleWeather();
+
 		this.simulationView.render(this.regions);
 
 		if (this.enabled) {
@@ -68,12 +75,19 @@ export default class SimulationController extends BaseController {
 			line.tick++;
 
 			if (line.tick > line.speed) {
+				line.tick = 0;
 				const group = await this.randomGroup();
+				line.queue.unshift(group);
+			}
+
+			if (line.queue.length > 0) {
 				const region = this.randomRegion();
+				const group = line.queue[line.queue.length - 1];
 
-				region.groups = region.groups || [];
-
-				region.groups.push(group);
+				if (region.visitors + group.persons.length <= this.maxPerRegion) {
+					region.visitors += group.persons.length;
+					region.groups.push(line.queue.pop());
+				}
 			}
 		}
 	}
@@ -83,6 +97,9 @@ export default class SimulationController extends BaseController {
 
 		for (const region of Storage.getRegions()) {
 			if (region.locked === true) {
+				region.groups = [];
+				region.visitors = 0;
+				region.maxVisitors = this.maxPerRegion;
 				this.regions.push(region);
 			}
 		}
@@ -107,7 +124,8 @@ export default class SimulationController extends BaseController {
 	randomLine() {
 		return {
 			tick: 0,
-			speed: this.randomInt(0, 3)
+			speed: this.randomInt(0, 3),
+			queue: []
 		};
 	}
 
@@ -118,7 +136,7 @@ export default class SimulationController extends BaseController {
 	async randomGroup() {
 		const size = this.randomInt(1, 4);
 
-		const response = await fetch(`https://randomuser.me/api?results=${size}`);
+		const response = await fetch(`https://randomuser.me/api?results=${size}&nat=nl`);
 		const persons = (await response.json()).results;
 
 		return {
