@@ -7,7 +7,7 @@ export default class TerrainController extends BaseController {
 		this.terrainView = new TerrainView();
 		this.terrainView.setRegionSelectedEvent(region => this.mainController.regionChanged(region));
 	}
-	
+
 	loadRegion(region) {
 		this.terrainView.loadRegion(region);
 	};
@@ -15,7 +15,7 @@ export default class TerrainController extends BaseController {
 	loadWeather(location) {
 		console.log(location);
 		const API_KEY = 'e98e09391c539738e406cbea8d253955';
-		fetch('https://api.openweathermap.org/data/2.5/weather?id='+location+'&appid=' + API_KEY)
+		fetch('https://api.openweathermap.org/data/2.5/weather?id=' + location + '&appid=' + API_KEY)
 			.then(response => response.json())
 			.then(json => {
 				this.terrainView.weatherLoaded(json);

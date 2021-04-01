@@ -42,28 +42,27 @@ export default class SimulationController extends BaseController {
 				const cellSize = 46;
 				let weather = 'rain';
 				if (["rain", "shower rain", "thunderstorm"].includes(weather)) {
-					if(group.status !== 'rain'){
+					if (group.status !== 'rain') {
 						let counter = 0;
 						let obj = region.terrain.filter(o => o.type === 'tent');
 						
-						if(counter >=! obj.length)
-						{
+						if (counter >= !obj.length) {
 							group.y = this.randomInt((obj[counter].row - 1) * cellSize, (obj[counter].row - 1) * cellSize + obj[counter].width * cellSize);
 							group.x = this.randomInt((obj[counter].cell - 1) * cellSize, (obj[counter].cell - 1) * cellSize + obj[counter].height * cellSize);
 							group.status = 'rain';
 						}
-						
+
 					}
-					
-					
+
+
 				} else if (["clear sky"].contains(weather)) {
 
 				}
-				
+
 			}
 		}
 	}
-	
+
 	async handleLines() {
 		for (let line of this.lines) {
 			line.tick++;
@@ -81,13 +80,13 @@ export default class SimulationController extends BaseController {
 
 	async startSimulation() {
 		this.regions = [];
-		
+
 		for (const region of Storage.getRegions()) {
 			if (region.locked === true) {
 				this.regions.push(region);
 			}
 		}
-		
+
 		this.simulationView.render(this.regions);
 
 		this.enabled = true;
@@ -97,7 +96,7 @@ export default class SimulationController extends BaseController {
 
 	async resumeSimulation() {
 		this.enabled = false;
-		
+
 		await this.tick();
 	};
 
@@ -121,15 +120,15 @@ export default class SimulationController extends BaseController {
 
 		const response = await fetch(`https://randomuser.me/api?results=${size}`);
 		const persons = (await response.json()).results;
-		
+
 		return {
 			persons: persons.map(person => {
 				return {
 					name: `${person.name.first} ${person.name.last}`
 				}
 			}),
-			x: this.randomInt(0,687),
-			y: this.randomInt(0,687),
+			x: this.randomInt(0, 687),
+			y: this.randomInt(0, 687),
 		}
 	}
 

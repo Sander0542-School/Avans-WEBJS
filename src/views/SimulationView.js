@@ -24,10 +24,10 @@ export default class SimulationView extends View {
 		row.append(colLeft, colRight);
 
 		this.app.append(row);
-		
+
 		this.cacheImages();
 	};
-	
+
 	cacheImages() {
 		const types = [
 			'drink',
@@ -39,9 +39,9 @@ export default class SimulationView extends View {
 			'tree_shadow',
 			'tree_wide',
 		];
-		
+
 		this.images = [];
-		
+
 		for (const type of types) {
 			const image = new Image();
 			image.src = `/assets/tiles/${type}.jpg`;
@@ -78,7 +78,7 @@ export default class SimulationView extends View {
 		for (let rowId = 1; rowId <= 15; rowId++) {
 			for (let cellId = 1; cellId <= 15; cellId++) {
 				let placeable = null;
-				
+
 				for (let terrainItem of region.terrain) {
 					if (terrainItem.row === rowId && terrainItem.cell === cellId) {
 						placeable = terrainItem;
@@ -98,7 +98,7 @@ export default class SimulationView extends View {
 		}
 
 		for (const group of (region.groups || [])) {
-				context.rect(group.x, group.y, 3, 3);
+			context.rect(group.x, group.y, 3, 3);
 		}
 		context.fillStyle = 'red';
 		context.fill();
@@ -117,7 +117,7 @@ export default class SimulationView extends View {
 			}
 		}
 	};
-	
+
 	renderGroup(persons) {
 		this.persons.innerHTML = '';
 		if (persons) {
