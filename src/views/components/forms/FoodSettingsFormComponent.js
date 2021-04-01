@@ -15,8 +15,6 @@ export default class FoodSettingsFormComponent extends SettingsFormComponent {
 	}
 
 	render(form) {
-		console.log(form);
-		
 		if (super.render(form)) {
 			const formElements = [];
 			const formInputs = [];

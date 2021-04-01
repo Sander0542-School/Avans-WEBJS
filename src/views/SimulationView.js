@@ -106,8 +106,15 @@ export default class SimulationView extends View {
 			}
 		}
 
-		for (const group of region.groups) {
-			context.rect(group.x, group.y, 3, 3);
+		for (const field of region.fields) {
+			const rowId = Math.floor((field.id - 1) / 15);
+			const cellId = field.id - (rowId * 15) - 1;
+
+			for (const group of field.groups) {
+				const groupX = (cellId * 46) + group.x;
+				const groupY = (rowId * 46) + group.y;
+				context.rect(groupX, groupY, 3, 3);
+			}
 		}
 		context.fillStyle = 'red';
 		context.fill();
@@ -117,12 +124,20 @@ export default class SimulationView extends View {
 			const x = e.clientX - rect.left;
 			const y = e.clientY - rect.top;
 
-			for (const group of region.groups) {
-				if (x >= group.x && x <= group.x + 3 && y >= group.y && y <= group.y + 3) {
-					this.renderGroup(group.persons);
-					break;
+			for (const field of region.fields) {
+				const rowId = Math.floor((field.id - 1) / 15);
+				const cellId = field.id - (rowId * 15) - 1;
+
+				for (const group of field.groups) {
+					const groupX = (cellId * 46) + group.x;
+					const groupY = (rowId * 46) + group.y;
+
+					if (x >= groupX && x <= groupX + 3 && y >= groupY && y <= groupY + 3) {
+						this.renderGroup(group.persons);
+						return;
+					}
+					this.renderGroup();
 				}
-				this.renderGroup();
 			}
 		}
 	};
