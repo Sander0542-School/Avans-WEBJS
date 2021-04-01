@@ -84,7 +84,6 @@ export default class SimulationView extends View {
 		context.fillRect(0, 0, canvas.width, canvas.height);
 
 		const cellSize = 46;
-
 		for (let rowId = 1; rowId <= 15; rowId++) {
 			for (let cellId = 1; cellId <= 15; cellId++) {
 				let placeable = null;
