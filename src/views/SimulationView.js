@@ -75,14 +75,12 @@ export default class SimulationView extends View {
 		context.fillRect(0, 0, canvas.width, canvas.height);
 
 		const cellSize = 46;
-		let terrainItems = [];
 		for (let rowId = 1; rowId <= 15; rowId++) {
 			for (let cellId = 1; cellId <= 15; cellId++) {
 				let placeable = null;
 				
 				for (let terrainItem of region.terrain) {
 					if (terrainItem.row === rowId && terrainItem.cell === cellId) {
-						terrainItems.push(terrainItem);
 						placeable = terrainItem;
 						break;
 					}
@@ -119,10 +117,6 @@ export default class SimulationView extends View {
 			}
 		}
 	};
-	
-	randomInteger(min, max) {
-		return Math.floor(Math.random() * (max - min + 1)) + min;
-	}
 	
 	renderGroup(persons) {
 		this.persons.innerHTML = '';
