@@ -24,7 +24,31 @@ export default class SimulationView extends View {
 		row.append(colLeft, colRight);
 
 		this.app.append(row);
+		
+		this.cacheImages();
 	};
+	
+	cacheImages() {
+		const types = [
+			'drink',
+			'food',
+			'tent',
+			'toilet',
+			'trash',
+			'tree_high',
+			'tree_shadow',
+			'tree_wide',
+		];
+		
+		this.images = [];
+		
+		for (const type of types) {
+			const image = new Image();
+			image.src = `/assets/tiles/${type}.jpg`;
+
+			this.images[type] = image;
+		}
+	}
 
 	render(regions) {
 		this.renderCanvases(regions);
@@ -70,12 +94,7 @@ export default class SimulationView extends View {
 				const canvasX = (rowId - 1) * cellSize;
 				const canvasY = (cellId - 1) * cellSize;
 
-				const image = new Image();
-				image.src = `/assets/tiles/${placeable.type}.jpg`;
-
-				image.onload = () => {
-					context.drawImage(image, canvasY, canvasX, placeable.width * cellSize, placeable.height * cellSize);
-				}
+				context.drawImage(this.images[placeable.type], canvasY, canvasX, placeable.width * cellSize, placeable.height * cellSize);
 			}
 		}
 
