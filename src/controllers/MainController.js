@@ -28,7 +28,8 @@ export default class MainController extends Controller {
 		const API_KEY = 'e98e09391c539738e406cbea8d253955';
 		fetch(`https://api.openweathermap.org/data/2.5/weather?id=${location}&appid=${API_KEY}`)
 			.then(response => response.json())
-			.then(json => this.weatherChanged(json.weather[0]));
+			.then(json => this.weatherChanged(json.weather[0]))
+			.catch(reason => console.log(reason));
 	}
 
 	weatherChanged(weather) {
