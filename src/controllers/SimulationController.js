@@ -36,6 +36,7 @@ export default class SimulationController extends BaseController {
 
 		await this.handleLines();
 		await this.handleWeather();
+		await this.handleTrash();
 
 		this.simulationView.render(this.regions);
 
@@ -45,8 +46,6 @@ export default class SimulationController extends BaseController {
 	}
 
 	async handleWeather() {
-		const cellSize = 46;
-
 		for (const region of this.regions) {
 			for (const field of region.fields) {
 				for (const group of field.groups) {
@@ -140,6 +139,23 @@ export default class SimulationController extends BaseController {
 						break;
 					}
 				}
+			}
+		}
+	}
+
+	async handleTrash() {
+		for (const region of this.regions) {
+			const trashBins = region.terrain.filter(o => o.type === 'trash');
+
+			for (const trashBin of trashBins) {
+				const extraTrash = this.randomInt(1, 5) / 10;
+				let newTrash = (trashBin.props.trash || 0) + extraTrash;
+
+				if (newTrash >= trashBin.props.capacity) {
+					newTrash = 0;
+				}
+
+				trashBin.props.trash = newTrash;
 			}
 		}
 	}

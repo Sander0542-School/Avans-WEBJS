@@ -99,10 +99,21 @@ export default class SimulationView extends View {
 					continue;
 				}
 
-				const canvasX = (rowId - 1) * cellSize;
-				const canvasY = (cellId - 1) * cellSize;
+				const canvasY = (rowId - 1) * cellSize;
+				const canvasX = (cellId - 1) * cellSize;
 
-				context.drawImage(this.images[placeable.type], canvasY, canvasX, placeable.width * cellSize, placeable.height * cellSize);
+				context.drawImage(this.images[placeable.type], canvasX, canvasY, placeable.width * cellSize, placeable.height * cellSize);
+				
+				if (placeable.type === 'trash') {
+					const lineLength = cellSize / placeable.props.capacity * (placeable.props.trash || 0);
+					
+					context.beginPath();
+					context.lineWidth = 5;
+					context.strokeStyle = 'darkorange';
+					context.moveTo(canvasX + cellSize - 3, canvasY + cellSize);
+					context.lineTo(canvasX + cellSize - 3, canvasY + cellSize - lineLength);
+					context.stroke();
+				}
 			}
 		}
 
