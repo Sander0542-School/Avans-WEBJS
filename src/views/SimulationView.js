@@ -1,8 +1,10 @@
 import {CardComponent, View} from "../CROWDR";
 
 export default class SimulationView extends View {
-	constructor() {
+	constructor(lineCountChanged) {
 		super();
+
+		this.lineCountChanged = lineCountChanged;
 
 		this.app = this.getElement('#simulationController');
 
@@ -13,19 +15,24 @@ export default class SimulationView extends View {
 		this.regions = this.createElement('div', 'row simulation-list');
 		const canvasesCard = new CardComponent('Regions', this.regions).render();
 
-		const settingsCard = new CardComponent('Settings').render();
+		this.lineSettings = this.createElement('div', '', 'lineSettings');
+		const settingsCard = new CardComponent('Settings', this.lineSettings).render();
+
+		this.lineInfo = this.createElement('table', 'table table-sm table-borderless');
+		const lineInfoCard = new CardComponent('Festival Lines', this.lineInfo).render();
 
 		this.persons = this.createElement('table', 'table table-sm table-borderless');
 		const infoCard = new CardComponent('Information', this.persons).render();
 
 		colLeft.append(canvasesCard);
-		colRight.append(settingsCard, infoCard);
+		colRight.append(settingsCard, lineInfoCard, infoCard);
 
 		row.append(colLeft, colRight);
 
 		this.app.append(row);
 
 		this.cacheImages();
+		this.renderSettings();
 	};
 
 	cacheImages() {
@@ -50,8 +57,9 @@ export default class SimulationView extends View {
 		}
 	}
 
-	render(regions) {
+	render(regions, lines) {
 		this.renderRegions(regions);
+		this.renderLines(lines)
 	};
 
 	renderRegions(regions) {
@@ -103,10 +111,10 @@ export default class SimulationView extends View {
 				const canvasX = (cellId - 1) * cellSize;
 
 				context.drawImage(this.images[placeable.type], canvasX, canvasY, placeable.width * cellSize, placeable.height * cellSize);
-				
+
 				if (placeable.type === 'trash') {
 					const lineLength = cellSize / placeable.props.capacity * (placeable.props.trash || 0);
-					
+
 					context.beginPath();
 					context.lineWidth = 5;
 					context.strokeStyle = 'darkorange';
@@ -160,6 +168,41 @@ export default class SimulationView extends View {
 				const row = this.persons.insertRow();
 				row.insertCell().innerText = person.name;
 			}
+		}
+	}
+
+	renderSettings() {
+		this.lineSettings.innerHTML = '';
+		
+		const lineHelp = this.createElement('h6');
+		lineHelp.innerText = 'Line Count';
+
+		const addLineButton = this.createElement('button', 'btn btn-success');
+		addLineButton.innerText = '+';
+		addLineButton.addEventListener('click', () => {
+			this.lineCountChanged(1);
+		});
+
+		const removeLineButton = this.createElement('button', 'btn btn-danger mx-2');
+		removeLineButton.innerText = '-';
+		removeLineButton.addEventListener('click', () => {
+			this.lineCountChanged(-1);
+		});
+
+		this.lineSettings.append(lineHelp, addLineButton, removeLineButton);
+	}
+
+	renderLines(lines) {
+		this.lineInfo.innerHTML = '';
+		
+		const row = this.lineInfo.insertRow();
+		row.insertCell().innerText = 'Scans every x seconds';
+		row.insertCell().innerText = 'Queue Length';
+		
+		for (const line of lines) {
+			const row = this.lineInfo.insertRow();
+			row.insertCell().innerText = line.speed;
+			row.insertCell().innerText = line.queue.length;
 		}
 	}
 }

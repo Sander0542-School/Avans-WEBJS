@@ -3,7 +3,6 @@ import {BaseController, SimulationView, Storage} from "../CROWDR";
 export default class SimulationController extends BaseController {
 
 	ticksPerSecond = 20;
-	maxPerRegion = 15 * 15 * 7;
 	maxPerField = 7;
 	cellSize = 46;
 
@@ -15,7 +14,7 @@ export default class SimulationController extends BaseController {
 
 	constructor(mainController) {
 		super(mainController);
-		this.simulationView = new SimulationView();
+		this.simulationView = new SimulationView((change) => this.lineCountChanged(this.lines.length + change));
 		this.lineCountChanged(this.lineCount);
 	}
 
@@ -29,6 +28,8 @@ export default class SimulationController extends BaseController {
 		while (this.lines.length < lineCount) {
 			this.lines.push(this.randomLine());
 		}
+		
+		this.simulationView.renderLines(this.lines);
 	}
 
 	async tick() {
@@ -38,7 +39,7 @@ export default class SimulationController extends BaseController {
 		await this.handleWeather();
 		await this.handleTrash();
 
-		this.simulationView.render(this.regions);
+		this.simulationView.render(this.regions, this.lines);
 
 		if (this.enabled) {
 			setTimeout(() => this.tick(), 1000 / this.ticksPerSecond);
@@ -184,13 +185,13 @@ export default class SimulationController extends BaseController {
 					}
 				}
 
-				region.maxVisitors = region.fields.length * 7;
+				region.maxVisitors = region.openFields.length * this.maxPerField;
 
 				this.regions.push(region);
 			}
 		}
 
-		this.simulationView.render(this.regions);
+		this.simulationView.render(this.regions, this.lines);
 
 		this.enabled = true;
 
