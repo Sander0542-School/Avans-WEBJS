@@ -18,3 +18,20 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+
+
+const dragTo = (subject, targetEl) => {
+
+	cy.wrap(subject).trigger("dragstart");
+	cy.get(targetEl).trigger("drop");
+
+	
+};
+
+Cypress.Commands.addAll(
+	{ prevSubject: 'element' },
+	{
+		dragTo,
+	}
+);
