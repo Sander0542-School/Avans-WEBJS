@@ -192,10 +192,12 @@ export default class SimulationController extends BaseController {
 		}
 
 		this.simulationView.render(this.regions, this.lines);
+		
+		if (this.regions.length > 0) {
+			this.enabled = true;
 
-		this.enabled = true;
-
-		await this.tick();
+			await this.tick();
+		}
 	};
 
 	async resumeSimulation() {

@@ -11,7 +11,7 @@ import {
 export default class MainController extends Controller {
 	constructor() {
 		super();
-		this.mainView = new MainView((location) => this.locationChanged(location));
+		this.mainView = new MainView((location) => this.locationChanged(location), (item) => this.navItemClicked(item));
 
 		this.loadDefaultRegion();
 		this.loadDefaultLocation();
@@ -33,6 +33,7 @@ export default class MainController extends Controller {
 	}
 
 	weatherChanged(weather) {
+		this.mainView.weatherChanged(weather);
 		if (this.terrainController) {
 			this.terrainController.weatherChanged(weather);
 		}
@@ -51,16 +52,17 @@ export default class MainController extends Controller {
 	}
 
 	async renderSimulation() {
+		window.location.hash = '#simulation';
 		this.mainView.renderSimulation();
 
 		this.simulationController = new SimulationController(this);
 		this.simulationController.startSimulation().then();
 	}
 
-	loadDefaultRegion() {
+	loadDefaultRegion(forceRegion = false) {
 		let region = null;
 
-		if (window.location.hash) {
+		if (window.location.hash && !forceRegion) {
 			if (window.location.hash === '#simulation') {
 				this.renderSimulation();
 				return;
@@ -86,5 +88,16 @@ export default class MainController extends Controller {
 		this.renderCreate();
 		this.terrainController.loadRegion(region);
 		this.placeableController.loadRegion(region);
+	}
+
+	navItemClicked(item) {
+		switch (item) {
+			case 'regions':
+				this.loadDefaultRegion(true);
+				break;
+			case 'simulation':
+				this.renderSimulation();
+				break;
+		}
 	}
 }

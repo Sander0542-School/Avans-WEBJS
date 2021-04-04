@@ -72,6 +72,10 @@ export default class SimulationView extends View {
 	renderRegions(regions) {
 		this.regions.innerHTML = '';
 
+		if (regions.length === 0) {
+			this.regions.innerText = 'There are no locked regions to simulate.';
+			return;
+		}
 		for (const region of regions) {
 			const regionCol = this.createElement('div', 'col-12');
 

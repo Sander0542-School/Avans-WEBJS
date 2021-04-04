@@ -1,18 +1,22 @@
 import {CardComponent, NavbarComponent, View} from "../CROWDR";
 
 export default class MainView extends View {
-	constructor(locationChanged) {
+	constructor(locationChanged, navItemClicked) {
 		super();
 		
 		this.app = this.getElement('#app');
 
-		const navbar = new NavbarComponent('CROWDR', (location) => locationChanged(location)).render();
+		this.navbar = new NavbarComponent('CROWDR', (location) => locationChanged(location), (item) => navItemClicked(item));
 		
 		const container = this.createElement('main', 'm-5');
 		this.row = this.createElement('div', 'row');
 		container.append(this.row);
 		
-		this.app.append(navbar, container);
+		this.app.append(this.navbar.render(), container);
+	}
+	
+	weatherChanged(weather) {
+		this.navbar.updateWeather(weather);
 	}
 	
 	renderCreate() {
@@ -27,14 +31,14 @@ export default class MainView extends View {
 		const settings = this.createElement('div', '', 'settingsController');
 		const terrain = this.createElement('div', '', 'terrainController');
 
-		const gridCard = new CardComponent('Grid form', grid).render();
-		const settingsCard = new CardComponent('Settings', settings).render();
-		const terrainCard = new CardComponent('Terrain', terrain).render();
-		const placeableCard = new CardComponent('Placeable Items', placeable).render();
+		const gridCard = new CardComponent('Grid form', grid);
+		const settingsCard = new CardComponent('Settings', settings);
+		const terrainCard = new CardComponent('Terrain', terrain);
+		const placeableCard = new CardComponent('Placeable Items', placeable);
 
-		colLeft.append(gridCard, placeableCard);
-		colMiddle.append(terrainCard);
-		colRight.append(settingsCard);
+		colLeft.append(gridCard.render(), placeableCard.render());
+		colMiddle.append(terrainCard.render());
+		colRight.append(settingsCard.render());
 		
 		this.row.append(colLeft, colMiddle, colRight);
 	}
