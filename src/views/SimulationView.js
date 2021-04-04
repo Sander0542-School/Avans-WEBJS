@@ -25,10 +25,10 @@ export default class SimulationView extends View {
 		this.lineSettings = this.createElement('div', '', 'lineSettings');
 		const settingsCard = new CardComponent('Settings', this.lineSettings).render();
 
-		this.lineInfo = this.createElement('table', 'table table-sm table-borderless');
+		this.lineInfo = this.createElement('table', 'table table-sm table-borderless', 'line-table');
 		const lineInfoCard = new CardComponent('Festival Lines', this.lineInfo).render();
 
-		this.persons = this.createElement('table', 'table table-sm table-borderless');
+		this.persons = this.createElement('table', 'table table-sm table-borderless', 'information-card');
 		const infoCard = new CardComponent('Information', this.persons).render();
 
 		colLeft.append(canvasesCard);
@@ -209,13 +209,13 @@ export default class SimulationView extends View {
 		const lineHelp = this.createElement('h6');
 		lineHelp.innerText = 'Line Count';
 
-		const addLineButton = this.createElement('button', 'btn btn-success');
+		const addLineButton = this.createElement('button', 'btn btn-success', 'add-line');
 		addLineButton.innerText = '+';
 		addLineButton.addEventListener('click', () => {
 			this.lineCountChanged(1);
 		});
 
-		const removeLineButton = this.createElement('button', 'btn btn-danger mx-2');
+		const removeLineButton = this.createElement('button', 'btn btn-danger mx-2', 'remove-line');
 		removeLineButton.innerText = '-';
 		removeLineButton.addEventListener('click', () => {
 			this.lineCountChanged(-1);

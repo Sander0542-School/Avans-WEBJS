@@ -1,0 +1,17 @@
+[
+	{
+		"type": "tent",
+		"row": 1,
+		"cell": 3
+	},
+	{
+		"type": "food",
+		"row": 8,
+		"cell": 6
+	},
+	{
+		"type": "trash",
+		"row": 3,
+		"cell": 4
+	}
+]
