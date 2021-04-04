@@ -21,7 +21,7 @@ export default class SimulationView extends View {
 		this.audio.setAttribute("muted", true);
 		this.audioSource.src = `/assets/sounds/audience_short.mp3`;
 		this.audio.append(this.audioSource);
-		
+
 		this.lineSettings = this.createElement('div', '', 'lineSettings');
 		const settingsCard = new CardComponent('Settings', this.lineSettings).render();
 
@@ -172,7 +172,7 @@ export default class SimulationView extends View {
 		this.persons.innerHTML = '';
 		if (persons) {
 
-			switch(persons.length) {
+			switch (persons.length) {
 				case 1:
 					this.audio.volume = 0.2;
 					break;
@@ -191,11 +191,11 @@ export default class SimulationView extends View {
 			let isAllowed = this.audio.play();
 
 			if (isAllowed !== undefined) {
-				isAllowed.catch(function(error) {
+				isAllowed.catch(function (error) {
 					console.log("Wegens de beveiliging van de browser kunnen we geen geluid afspelen, klik op het scherm om dit te laten werken.")
 				});
 			}
-			
+
 			for (const person of persons) {
 				const row = this.persons.insertRow();
 				row.insertCell().innerText = person.name;
@@ -205,7 +205,7 @@ export default class SimulationView extends View {
 
 	renderSettings() {
 		this.lineSettings.innerHTML = '';
-		
+
 		const lineHelp = this.createElement('h6');
 		lineHelp.innerText = 'Line Count';
 
@@ -226,11 +226,11 @@ export default class SimulationView extends View {
 
 	renderLines(lines) {
 		this.lineInfo.innerHTML = '';
-		
+
 		const row = this.lineInfo.insertRow();
 		row.insertCell().innerText = 'Scans every x seconds';
 		row.insertCell().innerText = 'Queue Length';
-		
+
 		for (const line of lines) {
 			const row = this.lineInfo.insertRow();
 			row.insertCell().innerText = line.speed;
