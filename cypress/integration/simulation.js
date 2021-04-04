@@ -63,14 +63,28 @@ describe('Create Region', () => {
 		cy.restoreLocalStorage();
 		cy.visit('/#simulation');
 
-		cy.get('.row simulation-list').contains('Simulatie');
+		cy.get('.row .simulation-list').contains('Simulatie');
+		cy.get('.simulation-canvas').should('be.visible');
 
-		
 
 		cy.saveLocalStorage();
 	});
 
-	
 
-	
+	it('change line count', () => {
+		cy.restoreLocalStorage();
+		cy.visit('/#simulation');
+
+		cy.get(`#add-line`).should('be.visible');
+		cy.get(`#add-line`).click();
+		cy.get('#line-table').find('tr').should('have.length', 5);
+
+
+		cy.get(`#remove-line`).should('be.visible');
+		cy.get(`#remove-line`).click();
+		cy.get('#line-table').find('tr').should('have.length', 4);
+
+
+		cy.saveLocalStorage();
+	});
 });
