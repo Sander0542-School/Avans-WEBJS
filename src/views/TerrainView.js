@@ -129,7 +129,7 @@ export default class TerrainView extends View {
 		this.actions.innerHTML = '';
 
 		if (region.locked === false && region.objects.length === 0) {
-			const lockButton = this.createElement('button', 'btn btn-danger');
+			const lockButton = this.createElement('button', 'btn btn-danger', 'lock-region');
 			lockButton.innerText = 'Lock region';
 			lockButton.addEventListener('click', () => {
 				Storage.lockRegion(region);

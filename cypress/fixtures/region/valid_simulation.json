@@ -1,0 +1,10 @@
+{
+	"name": "Simulatie",
+	"tentCount": 1,
+	"foodCount": 1,
+	"drinkCount": 1,
+	"treeType": "wide",
+	"treeCount": 1,
+	"toiletCount": 1,
+	"trashBinCount": 1
+}
