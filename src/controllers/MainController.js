@@ -13,8 +13,6 @@ export default class MainController extends Controller {
 		super();
 		this.mainView = new MainView((location) => this.locationChanged(location));
 
-		window.onhashchange = ev => this.loadDefaultRegion();
-
 		this.loadDefaultRegion();
 		this.loadDefaultLocation();
 	}
@@ -23,11 +21,26 @@ export default class MainController extends Controller {
 		let locationWeather = '5392171';
 		this.locationChanged(locationWeather)
 	}
-	
-	locationChanged(locationWeather) {
-		this.terrainController.loadWeather(locationWeather);
+
+	locationChanged(location) {
+		this.weatherLocation = location;
+
+		const API_KEY = 'e98e09391c539738e406cbea8d253955';
+		fetch(`https://api.openweathermap.org/data/2.5/weather?id=${location}&appid=${API_KEY}`)
+			.then(response => response.json())
+			.then(json => this.weatherChanged(json.weather[0]))
+			.catch(reason => console.log(reason));
 	}
-	
+
+	weatherChanged(weather) {
+		if (this.terrainController) {
+			this.terrainController.weatherChanged(weather);
+		}
+		if (this.simulationController) {
+			this.simulationController.weatherChanged(weather);
+		}
+	}
+
 	renderCreate() {
 		this.mainView.renderCreate();
 

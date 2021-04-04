@@ -40,16 +40,16 @@ export default class PlaceableComponent extends Component {
 
 		const canvasImage = new Image();
 		canvasImage.src = `/assets/tiles/${this.item.type}.jpg`;
-		
+
 		canvasImage.onload = () => {
 			const canvasContext = canvas.getContext("2d");
 			canvasContext.drawImage(canvasImage, 0, 0, canvasImage.width, canvasImage.height, 0, 0, canvas.width, canvas.height);
 
 			element.append(canvas);
 		}
-		
+
 		let settingsComponent;
-		
+
 		switch (this.item.type) {
 			case "tent":
 				settingsComponent = new TentSettingsFormComponent('settingsForm', (form) => this.saveProps(element, form.getProps()), this.region, this.item);
@@ -61,7 +61,7 @@ export default class PlaceableComponent extends Component {
 				settingsComponent = new TrashSettingsFormComponent('settingsForm', (form) => this.saveProps(element, form.getProps()), this.region, this.item);
 				break;
 		}
-		
+
 		if (settingsComponent) {
 			element.classList.add('c-pointer');
 			element.addEventListener('click', () => {
@@ -70,18 +70,20 @@ export default class PlaceableComponent extends Component {
 			})
 		}
 
-		element.setAttribute('draggable', true);
-		element.addEventListener('dragstart', e => {
-			e.dataTransfer.setData('text/plain', e.target.id);
-		});
+		if (!this.item.type.startsWith('tree')) {
+			element.setAttribute('draggable', true);
+			element.addEventListener('dragstart', e => {
+				e.dataTransfer.setData('text/plain', e.target.id);
+			});
+		}
 
 		return element;
 	}
-	
+
 	getProps(element) {
 		return JSON.parse(element.dataset.props);
 	}
-	
+
 	saveProps(element, props) {
 		Storage.saveProps(this.region, this.item, props);
 		element.dataset.props = JSON.stringify(props || "{}");

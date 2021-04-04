@@ -1,17 +1,22 @@
 import {PlaceableComponent, Storage, View} from "../CROWDR";
 
 export default class TerrainView extends View {
+	weatherIcon = '01d';
+	
 	constructor() {
 		super();
 
 		this.app = this.getElement('#terrainController');
-		this.weatherBar = this.createElement('div', 'd-flex');
 		this.table = this.createElement('table', 'table table-bordered terrain-table');
 		this.nav = this.createElement('ul', 'nav nav-tabs');
 		this.actions = this.createElement('div');
-		this.icon = this.createElement('img', 'weather-icon');
 
-		this.app.append(this.weatherBar, this.nav, this.table, this.actions);
+		const weatherBar = this.createElement('div', 'd-flex');
+		this.icon = this.createElement('img', 'weather-icon');
+		
+		weatherBar.append(this.icon);
+
+		this.app.append(weatherBar, this.nav, this.table, this.actions);
 	};
 
 	setRegionSelectedEvent(regionChanged) {
@@ -26,7 +31,7 @@ export default class TerrainView extends View {
 		this.renderActions(region);
 	};
 
-	renderNav(selectedRegion) {
+	renderNav(selectedRegion = this.region) {
 		this.nav.innerHTML = '';
 
 		Storage.getRegions().forEach(region => {
@@ -119,10 +124,8 @@ export default class TerrainView extends View {
 		}
 	};
 	
-	weatherLoaded(weatherInfo) {
-		this.icon.src = `https://openweathermap.org/img/wn/${weatherInfo.weather[0].icon}@2x.png`;
-		// this.icon.classList.add("ml-auto p-2");
-		this.weatherBar.append(this.icon);
+	weatherChanged(weather) {
+		this.icon.src = `https://openweathermap.org/img/wn/${weather.icon}@2x.png`;
 	}
 
 	renderActions(region) {

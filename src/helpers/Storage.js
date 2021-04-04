@@ -4,6 +4,7 @@ export default class Storage {
 			const regions = this.getRegions();
 
 			const objects = [];
+			const terrains = [];
 
 			let id = 1;
 
@@ -44,34 +45,6 @@ export default class Storage {
 				});
 			}
 
-			for (let i = 0; i < regionForm.treeCount; i++) {
-				let treeHeight = 1;
-				let treeWidth = 1;
-
-				switch (regionForm.treeType) {
-					case 'high':
-						treeHeight = 1;
-						treeWidth = 1;
-						break;
-					case 'wide':
-						treeHeight = 2;
-						treeWidth = 1;
-						break;
-					case 'shadow':
-						treeHeight = 3;
-						treeWidth = 3;
-						break;
-				}
-
-				objects.push({
-					id: id++,
-					type: 'tree_' + regionForm.treeType,
-					width: treeWidth,
-					height: treeHeight,
-					props: {}
-				});
-			}
-
 			for (let i = 0; i < regionForm.toiletCount; i++) {
 				objects.push({
 					id: id++,
@@ -95,11 +68,78 @@ export default class Storage {
 				});
 			}
 
+			const freeFields = [];
+			for (let row = 1; row <= 13; row++) {
+				for (let cell = 1; cell <= 13; cell++) {
+					freeFields.push({
+						row: row,
+						cell: cell
+					});
+				}
+			}
+
+			for (let i = 0; i < regionForm.treeCount; i++) {
+				let treeHeight = 1;
+				let treeWidth = 1;
+
+				switch (regionForm.treeType) {
+					case 'high':
+						treeHeight = 1;
+						treeWidth = 1;
+						break;
+					case 'wide':
+						treeHeight = 2;
+						treeWidth = 1;
+						break;
+					case 'shadow':
+						treeHeight = 3;
+						treeWidth = 3;
+						break;
+				}
+
+				let field;
+				while (field === undefined) {
+					const nextField = freeFields[Math.floor(Math.random() * freeFields.length)];
+					let success = true;
+
+					for (let rowId = nextField.row; rowId < nextField.row + treeHeight; rowId++) {
+						for (let cellId = nextField.cell; cellId < nextField.cell + treeWidth; cellId++) {
+							if (freeFields.filter(value => value.row === rowId && value.cell === cellId).length === 0) {
+								success = false;
+							}
+						}
+					}
+
+					if (success) {
+						for (let rowId = nextField.row; rowId < nextField.row + treeHeight; rowId++) {
+							for (let cellId = nextField.cell; cellId < nextField.cell + treeWidth; cellId++) {
+								freeFields.splice(freeFields.indexOf({
+									row: rowId,
+									cell: cellId
+								}), 1);
+							}
+						}
+						
+						field = nextField;
+					}
+				}
+
+				terrains.push({
+					id: id++,
+					type: 'tree_' + regionForm.treeType,
+					row: field.row,
+					cell: field.cell,
+					width: treeWidth,
+					height: treeHeight,
+					props: {}
+				});
+			}
+
 			const region = {
 				name: regionForm.name,
 				locked: false,
 				objects: objects,
-				terrain: []
+				terrain: terrains
 			}
 
 			regions.push(region);
