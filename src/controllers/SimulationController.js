@@ -28,7 +28,7 @@ export default class SimulationController extends BaseController {
 		while (this.lines.length < lineCount) {
 			this.lines.push(this.randomLine());
 		}
-		
+
 		this.simulationView.renderLines(this.lines);
 	}
 
@@ -192,7 +192,7 @@ export default class SimulationController extends BaseController {
 		}
 
 		this.simulationView.render(this.regions, this.lines);
-		
+
 		if (this.regions.length > 0) {
 			this.enabled = true;
 
@@ -225,8 +225,26 @@ export default class SimulationController extends BaseController {
 	async randomGroup() {
 		const size = this.randomInt(1, 4);
 
-		const response = await fetch(`https://randomuser.me/api?results=${size}&nat=nl`);
-		const persons = (await response.json()).results;
+		let persons = [
+			{
+				name: {
+					first: 'Sander',
+					last: 'Jochems'
+				}
+			},
+			{
+				name: {
+					first: 'Tommy',
+					last: 'den Reijer'
+				}
+			}
+		];
+
+		try {
+			const response = await fetch(`https://randomuser.me/api?results=${size}&nat=nl`)
+			persons = (await response.json()).results;
+		} catch (e) {
+		}
 
 		return {
 			persons: persons.map(person => {
