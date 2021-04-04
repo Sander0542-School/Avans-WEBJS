@@ -15,6 +15,13 @@ export default class SimulationView extends View {
 		this.regions = this.createElement('div', 'row simulation-list');
 		const canvasesCard = new CardComponent('Regions', this.regions).render();
 
+		this.audio = this.createElement('audio', '', 'audienceAudio');
+		this.audioSource = this.createElement('source', '', 'audienceAudioSource');
+		this.audioSource.setAttribute("type", "audio/mpeg");
+		this.audio.setAttribute("muted", true);
+		this.audioSource.src = `/assets/sounds/audience_short.mp3`;
+		this.audio.append(this.audioSource);
+		
 		this.lineSettings = this.createElement('div', '', 'lineSettings');
 		const settingsCard = new CardComponent('Settings', this.lineSettings).render();
 
@@ -25,7 +32,7 @@ export default class SimulationView extends View {
 		const infoCard = new CardComponent('Information', this.persons).render();
 
 		colLeft.append(canvasesCard);
-		colRight.append(settingsCard, lineInfoCard, infoCard);
+		colRight.append(settingsCard, lineInfoCard, infoCard, this.audio);
 
 		row.append(colLeft, colRight);
 
@@ -164,6 +171,31 @@ export default class SimulationView extends View {
 	renderGroup(persons) {
 		this.persons.innerHTML = '';
 		if (persons) {
+
+			switch(persons.length) {
+				case 1:
+					this.audio.volume = 0.2;
+					break;
+				case 2:
+					this.audio.volume = 0.3;
+					break;
+				case 3:
+					this.audio.volume = 0.5;
+					break;
+				case 4:
+					this.audio.volume = 1;
+					break;
+				default:
+					this.audio.volume = 1;
+			}
+			let isAllowed = this.audio.play();
+
+			if (isAllowed !== undefined) {
+				isAllowed.catch(function(error) {
+					console.log("Wegens de beveiliging van de browser kunnen we geen geluid afspelen, klik op het scherm om dit te laten werken.")
+				});
+			}
+			
 			for (const person of persons) {
 				const row = this.persons.insertRow();
 				row.insertCell().innerText = person.name;
