@@ -1,4 +1,4 @@
-describe('Create Region', () => {
+describe('Start Simulation', () => {
 	it('Fill form', () => {
 		cy.visit('/');
 
@@ -71,7 +71,7 @@ describe('Create Region', () => {
 	});
 
 
-	it('change line count', () => {
+	it('Change Line Count', () => {
 		cy.restoreLocalStorage();
 		cy.visit('/#simulation');
 
@@ -85,6 +85,18 @@ describe('Create Region', () => {
 		cy.get('#line-table').find('tr').should('have.length', 4);
 
 
+		cy.saveLocalStorage();
+	});
+
+
+	it('Check Elements', () => {
+		cy.restoreLocalStorage();
+		cy.visit('/#simulation');
+		
+		cy.get(`#lineSettings`).should('be.visible');
+		cy.get(`#line-table`).should('be.visible');
+		cy.get(`#information-card`).should('exist');
+		
 		cy.saveLocalStorage();
 	});
 });

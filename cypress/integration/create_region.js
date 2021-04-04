@@ -43,9 +43,9 @@ describe('Create Region', () => {
 			}
 		});
 
-		cy.get('#terrainController .terrain-table .draggable-item').should('have.length', 4);
+		cy.get('#terrainController .terrain-table .draggable-item').should('have.length', 5);
 		cy.visit('/');
-		cy.get('#terrainController .terrain-table .draggable-item').should('have.length', 4);
+		cy.get('#terrainController .terrain-table .draggable-item').should('have.length', 5);
 
 		cy.saveLocalStorage();
 	});
@@ -71,9 +71,9 @@ describe('Create Region', () => {
 			}
 		});
 
-		cy.get('#terrainController .terrain-table .draggable-item').should('have.length', 4);
+		cy.get('#terrainController .terrain-table .draggable-item').should('have.length', 5);
 		cy.visit('/');
-		cy.get('#terrainController .terrain-table .draggable-item').should('have.length', 4);
+		cy.get('#terrainController .terrain-table .draggable-item').should('have.length', 5);
 
 		cy.saveLocalStorage();
 	});

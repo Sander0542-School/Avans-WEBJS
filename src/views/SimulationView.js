@@ -21,7 +21,7 @@ export default class SimulationView extends View {
 		this.lineInfo = this.createElement('table', 'table table-sm table-borderless', 'line-table');
 		const lineInfoCard = new CardComponent('Festival Lines', this.lineInfo).render();
 
-		this.persons = this.createElement('table', 'table table-sm table-borderless');
+		this.persons = this.createElement('table', 'table table-sm table-borderless', 'information-card');
 		const infoCard = new CardComponent('Information', this.persons).render();
 
 		colLeft.append(canvasesCard);
